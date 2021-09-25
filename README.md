@@ -32,8 +32,9 @@ $ npm start
 
 ### Running Unit Tests
 Run unit tests with NPM
-
-`$ npm test`
+```bash
+$ npm test
+```
 
 ### (optional) add a key to the ssh-agent
 ```bash
