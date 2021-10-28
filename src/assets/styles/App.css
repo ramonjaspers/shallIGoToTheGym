@@ -1,0 +1,137 @@
+/* custom font import */
+@font-face {
+  font-family: "WaitingfortheSunrise";
+  src: local("WaitingfortheSunrise"),
+    url(../fonts/WaitingfortheSunrise-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto"), url(../fonts/Roboto-Regular.ttf) format("truetype");
+}
+
+/* page Layout style */
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+.box .row.navigation {
+  flex: 0 1 0;
+}
+.box .row.content {
+  flex: auto 1 auto;
+}
+.box .row.footer {
+  flex: 0 1 0;
+}
+
+/* custom components  */
+.container {
+  width: 70%;
+  color: #ffffff;
+  background-color: rgb(1, 5, 103, 0.9);
+}
+
+.containerTitle {
+  padding: 50px 0 25px 0;
+}
+
+.containerContent {
+  padding-bottom: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin: auto;
+  color: #ffffff;
+  align-items: center;
+  justify-content: center;
+}
+
+.backButton {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 25px 0 0 25px;
+  float: left;
+  color: #ffffff;
+}
+
+.backButton:hover {
+  color: #f2c300;
+  cursor: pointer;
+}
+
+.errMssg{
+  font-weight: lighter;
+  color: red;
+}
+
+/* general components */
+h1 {
+  font-family: "Roboto", serif;
+  font-size: 5vw;
+  color: #010567;
+  margin: 0px;
+  font-weight: bold;
+}
+
+h2 {
+  font-family: "Roboto", serif;
+  font-size: 5vw;
+  color: #f2c300;
+  margin: 0px;
+  font-weight: lighter;
+}
+
+h3 {
+  font-family: "Roboto", serif;
+  font-size: 3vw;
+  color: #ffffff;
+  margin: 0px;
+  font-weight: bold;
+}
+
+h4 {
+  font-family: "Roboto", serif;
+  font-size: 2vw;
+  color: #ffffff;
+  margin: 0px;
+  font-weight: lighter;
+}
+
+h5 {
+  font-family: "Roboto", serif;
+  font-size: 2vw;
+  color: #f2c300;
+  margin: 0px;
+  font-weight: lighter;
+}
+
+/* inputs */
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"],
+select {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  background-color: #f2c300;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 8px 16px;
+  text-transform: lowercase;
+}
+
+input[type="submit"]:hover {
+  /* background-color: #b8b6b0; */
+}

@@ -1,0 +1,54 @@
+.column {
+  float: left;
+  width: 33.33%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row {
+  height: 100%;
+  width: 100%;
+}
+
+.musclegain,
+.weightloss,
+.maintenance {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.musclegain {
+  background-image: url("../images/muscleGain.jpeg");
+}
+.weightloss {
+  background-image: url("../images/weightlossBG.jpeg");
+}
+.maintenance {
+  background-image: url("../images/maintaining.png");
+}
+.musclegain:hover {
+  /* background-image: url("../images/muscleGain.jpeg"); */
+}
+.weightloss:hover {
+  /* background-image: url("../images/weightlossBG.jpeg"); */
+}
+.maintenance:hover {
+  /* background-color: aliceblue; */
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+
+  .container {
+    width: 100%;
+  }
+}

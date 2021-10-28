@@ -1,0 +1,39 @@
+/* navigation style */
+.navigation {
+  background-color: #010567;
+  color: #ffffff;
+  width: 100%;
+}
+
+#naviagtionItems {
+  font-family: "Roboto", serif;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+.appLogo {
+  font-size: 4vw;
+  font-family: "WaitingfortheSunrise", serif;
+  margin-right: auto;
+}
+
+.navigationUrl {
+  font-size: 1.5vw;
+  font-weight: bold;
+  align-self: center;
+}
+
+.navigation li {
+  display: inline;
+}
+
+.navigation li a {
+  text-decoration: none;
+  color: #ffffff;
+  margin-right: 3vw;
+  display: block;
+}
+.navigation li a:hover {
+  color: #f2c300;
+}
