@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import '../assets/styles/Navigation.css';
 
 export default function Navigation() {
-  const { isAuth, logout } = useContext(AuthContext);
+  const { isAuth } = useContext(AuthContext);
   const [showMenu, toggleShowMenu] = useState(false);
 
   return (

@@ -1,5 +1,14 @@
+/* html, body, #reactapp, .App {
+  min-height: 100% !important;
+  height: 100%;
+} */
+
+/* .App { */
+  /* display: flex; */
+/* } */
 body {
   margin: 0;
+  height: 100%;
   font-family: 'Roboto', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -12,7 +21,9 @@ body {
 
 /* Set the root wrapper to the full page */
 #root {
-  width: 100%;
-  height: 100%;
   position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }

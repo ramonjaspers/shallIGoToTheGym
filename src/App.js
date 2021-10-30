@@ -67,6 +67,9 @@ export default function App() {
                     <PrivateRoute exact path="/profile" authState={isAuth}>
                         <Profile />
                     </PrivateRoute>
+                    <PrivateRoute exact path="/logout" authState={isAuth}>
+                        <Profile />
+                    </PrivateRoute>
                 </Switch>
             </>
             <Footer />

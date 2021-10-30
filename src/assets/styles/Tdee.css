@@ -14,25 +14,26 @@ label {
   font-weight: bold;
 }
 
-table {
+table{
   border-collapse: collapse;
   margin: 0 auto; /* or margin: 0 auto 0 auto */
 }
 
-th {
+th{
   padding: 0 20px 0 20px;
   border-bottom: 2px solid #f2c300;
   border-right: 2px solid #f2c300;
+
 }
-td {
+td{
   padding: 0 20px 0 20px;
   border-right: 2px solid #f2c300;
 }
 
-td:last-child,
-th:last-child {
+td:last-child, th:last-child {
   border-right: none;
 }
+
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
