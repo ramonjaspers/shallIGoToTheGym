@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
+import '../assets/styles/Auth.css';
+
 function SignUp() {
   // init hooks
   const history = useHistory();
@@ -30,18 +32,25 @@ function SignUp() {
   }
 
   return (
-    <>
+    <div class='wrapper'>
       <div class='container'>
-        <h3 class='containerTitle'>Registreren</h3>
+        <h4 class='containerTitle'>Registreren</h4>
         <form onSubmit={handleSubmit(signUp)}>
-          <input type="email" placeholder="email" {...register("email", { required: true, maxLength: 80 })} />
-          <input type="password" placeholder="password" {...register("password", { required: true, maxLength: 100 })} />
-          <input type="text" placeholder="username" {...register("username", {})} />
+          <label>Email</label>
+          <input type="email" placeholder="email" {...register("email", { required: true, maxLength: 80 })} /> <br />
+          {errors.email && <p class='errMssg'>{errors.api.message}</p>}
+          <label>Password</label>
+          <input type="password" placeholder="password" {...register("password", { required: true, maxLength: 100 })} /><br />
+          {errors.password && <p class='errMssg'>{errors.api.message}</p>}
+          <label>Username</label>
+          <input type="text" placeholder="username" {...register("username", {})} /><br />
+          {errors.username && <p class='errMssg'>{errors.api.message}</p>}
+          <input type="submit" onClick={() => clearErrors('api')} /><br />
           {errors.api && <p class='errMssg'>{errors.api.message}</p>}
-          <input type="submit" onClick={() => clearErrors('api')} />
+
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

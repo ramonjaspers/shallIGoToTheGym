@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+// style import
+import '../assets/styles/Auth.css';
 
 export default function Login() {
   // Init hooks
@@ -33,14 +35,13 @@ export default function Login() {
   return (
     <div class='wrapper'>
       <div class='container'>
-        <h3 class='containerTitle'>Inloggen</h3>
+        <h4 class='containerTitle'>Inloggen</h4>
         <form onSubmit={handleSubmit(signIn)}>
           <input type="username" placeholder="username" {...register("username", { required: true, maxLength: 80 })} />
           <input type="password" placeholder="Password" {...register("password", { required: true, maxLength: 100 })} />
           {errors.api && <p class='errMssg'>{errors.api.message}</p>}
           <input type="submit" onClick={() => clearErrors('api')} />
           <p>Dont have an account? <Link to="/signup">Sign up</Link> to our platform.</p>
-
         </form>
       </div>
     </div>

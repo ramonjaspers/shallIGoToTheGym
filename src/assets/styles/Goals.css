@@ -1,8 +1,8 @@
 .column {
   float: left;
   width: 33.33%;
-  height: 100%;
   display: flex;
+  flex: auto;
   align-items: center;
   justify-content: center;
 }
@@ -32,14 +32,10 @@
 .maintenance {
   background-image: url("../images/maintaining.png");
 }
-.musclegain:hover {
-  /* background-image: url("../images/muscleGain.jpeg"); */
-}
-.weightloss:hover {
-  /* background-image: url("../images/weightlossBG.jpeg"); */
-}
+.musclegain:hover,
+.weightloss:hover,
 .maintenance:hover {
-  /* background-color: aliceblue; */
+  opacity: 0.5;
 }
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */

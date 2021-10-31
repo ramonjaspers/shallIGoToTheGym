@@ -43,8 +43,8 @@ export default function TDEE() {
                 {TDEE === 0 ?
                     <>
                         <div class='containerTitle'>
-                            <h3>TDEE calculator</h3>
-                            <h4>Calculate your estimated calories you are burning every day!</h4>
+                            <h4>TDEE calculator</h4>
+                            <h5>Calculate your estimated calories you are burning every day!</h5>
                         </div>
                         <div class='containerContent'>
                             <p>The Key to Weight Control: A simple equation of calories in minus calories out. This
@@ -93,16 +93,16 @@ export default function TDEE() {
                     :
                     <>
                         <div class='containerContent'>
-                            <h3 class='containerTitle'>Your TDEE</h3>
+                            <h4 class='containerTitle'>Your TDEE</h4>
                             <p>TDEE is the total number of calories that your body expends in 24 hours, including all
                                 activities. It can vary widely in populations and is much higher for athletes or extremely
                                 active individuals. Caloric requirements may also vary among similarly active individuals
                                 due to differences in inherited metabolic rates. </p>
                             <table>
                                 <tr>
-                                    <th><h5>Weightloss</h5></th>
-                                    <th><h5>Maintaining</h5></th>
-                                    <th><h5>Musclegain</h5></th>
+                                    <th><h6>Weightloss</h6></th>
+                                    <th><h6>Maintaining</h6></th>
+                                    <th><h6>Musclegain</h6></th>
                                 </tr>
                                 <tr>
                                     <td><b>TDEE - 500</b> calories a day</td>

@@ -1,9 +1,7 @@
 // Import react module and components
-import React, { createContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
 import axios from 'axios';
-// import helpers
-export const WorkoutContext = createContext(null);
+
 
 /**
  * 
@@ -12,10 +10,8 @@ export const WorkoutContext = createContext(null);
  */
 export default function useWorkoutState() {
     // Set default states
-    const [workout, setWorkout] = useState({ user: null, exercises: {} });
+    const [workout, setWorkout] = useState({ userId: null, exercises: {} });
     const [exercises, setExercises] = useState([]);
-
-    const history = useHistory();
 
 
     /**
@@ -23,19 +19,34 @@ export default function useWorkoutState() {
      * 
      * @param {string} muscleId
      */
-    const fetchExercises = (muscleId) => {
-        axios.get(`https://wger.de/api/v2/exercise/?muscles=${muscleId}&language=2`, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then(({ data }) => {
+    const fetchExercises = async (muscleId, withImages = false) => {
+        try {
+            const { data } = await axios.get(`https://wger.de/api/v2/exercise/?muscles=${muscleId}&language=2`, {
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+            if (withImages) {
+                const promises = data.results.map(async exercise => {
+                    const image = await fetchExerciseImg(exercise.exercise_base).then((result) => {
+                        return result;
+                    });
+                    exercise.image = image;
+                    return exercise;
+                });
+                const exercisesWithImage = await Promise.all(promises);
+                console.log(exercisesWithImage);
+
+                setExercises(exercisesWithImage);
+            } else {
+                setExercises(data.results)
+            }
             // Set the set the exercises
-            setExercises(data.results)
-        }).catch((e) => {
+        } catch (e) {
             // if something goes wrong throw an error
             console.log(e);
             throw new Error('Fetching the exercises failed.');
-        });
+        }
     }
 
 
@@ -45,7 +56,7 @@ export default function useWorkoutState() {
      * @returns {array}
      */
     const fetchExerciseMuscles = async (muscleId) => {
-        const url = muscleId ? `https://wger.de/api/v2/muscle/${muscleId}/?language=2` : `https://wger.de/api/v2/muscle/?language=2`
+        const url = `https://wger.de/api/v2/muscle/${muscleId ?? ''}/?language=2`
         return axios.get(url, {
             headers: {
                 "Content-Type": "application/json"
@@ -60,9 +71,9 @@ export default function useWorkoutState() {
     }
 
 
-    const fetchExerciseImg = async (exercise) => {
+    const fetchExerciseImg = async (exerciseId) => {
         try {
-            const { data } = await axios.get(`https://wger.de/api/v2/exerciseimage/?exercise_base=${exercise}&language=2`, {
+            const { data } = await axios.get(`https://wger.de/api/v2/exerciseimage/?exercise_base=${exerciseId}&is_main=True&/?luangauge=2`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -79,6 +90,7 @@ export default function useWorkoutState() {
     return {
         workout,
         exercises,
+        setExercises,
         setWorkout,
         fetchExercises,
         fetchExerciseImg,

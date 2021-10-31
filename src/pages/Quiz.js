@@ -1,21 +1,29 @@
-// Import react module and components
 import React from 'react';
+import useQuestionState from '../helpers/QuestionState';
 
-// Import assets
-import weightloss from '../assets/images/weightlossBG.jpeg';
-import musclegain from '../assets/images/defaultBG.jpeg';
-import maintenance from '../assets/images/exercises.jpeg';
+// style import
+import '../assets/styles/Auth.css';
 
 export default function Quiz() {
-    return (
+  const { question, handleAnswerOptionClick, getQuestion } = useQuestionState();
+
+  return (
+    <div class='wrapper'>
+      <div class='container'>
         <>
-            {/* <Goal goal='weightloss' image={weightloss}/> */}
-            {/* <Goal goal='musclegain' image={musclegain}/> */}
-            {/* <Goal goal='maintenance' image={maintenance}/> */}
-        </>
-    );
+          <div className='question-section'>
+            <div className='question-count'>
+              <span>Question {question. + 1}</span>/{questions.length}
+            </div>
+            <div className='question-text'>{question.questionText}</div>
+          </div>
+          <div className='answer-section'>
+            {questions[currentQuestion].answerOptions.map((answerOption) => (
+              <button onClick={() => handleAnswerOptionClick(answerOption.isCorrect)}>{answerOption.answerText}</button>
+            ))}
+          </div>
+        </>      </div>
+    </div>
+  );
 }
-
-
-
 

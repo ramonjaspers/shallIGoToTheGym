@@ -38,7 +38,7 @@ export default function AuthContextProvider({ children }) {
 
     /**
      * 
-     * Sets the user validation JWT token
+     * Sets the user JWT token and IsAuth
      * @param {*} JWT 
      */
     function login(JWT) {
@@ -46,9 +46,7 @@ export default function AuthContextProvider({ children }) {
         localStorage.setItem('token', JWT);
         //set user data
         const token = jwtDecode(JWT);
-        console.log(token);
         toggleIsAuth({ user: { id: token.sub }, isAuth: true, status: 'done' });
-        console.log('Gebruiker is ingelogd!');
         // goto profile page
         history.push('/profile');
     }
@@ -61,7 +59,6 @@ export default function AuthContextProvider({ children }) {
         // Remove token and unset authentication
         localStorage.removeItem('token')
         toggleIsAuth({ isAuth: false, user: null, status: 'done' });
-        console.log('Gebruiker is uitgelogd!');
         // Goto homepage
         history.push('/');
     }

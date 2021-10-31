@@ -1,21 +1,21 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-function Button({ link, text, isDisabled }) {
+import '../assets/styles/Button.css'
+export default function Button({ link, text, isDisabled }) {
     const history = useHistory();
 
-    function goTo() {
-        history.push('/profile');
+    const navigateTo = () => {
+        history.push(`/${link}`);
     }
 
     return (
         <button
-            onClick={() => goTo(link)}
+            class='customButton'
+            onClick={() => navigateTo(link)}
             disabled={isDisabled ?? false}
         >
             {text}
         </button>
     );
 }
-
-export default Button;

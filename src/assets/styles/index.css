@@ -16,7 +16,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 25;
+  font-size: 20px;
 }
 
 /* Set the root wrapper to the full page */

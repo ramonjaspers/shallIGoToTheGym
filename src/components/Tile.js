@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from './Button';
-export default function Tile({ image, title, text, goTo}) {
+export default function Tile({ image, title, text, goTo, buttonText}) {
     return (
         <section>
             {image
@@ -8,7 +8,7 @@ export default function Tile({ image, title, text, goTo}) {
                 : <>
                     <h1>{title}</h1>
                     <p>{text}</p>
-                    <Button text={title} link={goTo} />
+                    <Button text={buttonText} link={goTo} />
                 </>
             }
         </section>

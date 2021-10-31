@@ -30,7 +30,7 @@ export default function Advice({ goal }) {
     <div class={isValidGoal(goal) ? goal : 'maintenance'}>
       <div class='container'>
         <div class='backButton' onClick={() => history.push('/goals')}>&#8592; </div>
-        <h3 class='containerTitle'>{goal}</h3>
+        <h4 class='containerTitle'>{goal}</h4>
         <p class='containerContent'>{getAdviceText(goal)}</p>
       </div>
     </div>

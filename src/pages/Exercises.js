@@ -2,14 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Exercise from '../components/Exercise';
-import useWorkoutState from '../context/WorkoutState';
+import useWorkoutState from '../helpers/WorkoutState';
 // import page style
 import '../assets/styles/Exercises.css';
 
 
 export default function Exercises() {
     const { fetchExerciseMuscles, fetchExercises, exercises } = useWorkoutState();
-
     const history = useHistory();
     const [muscles, setMuscles] = useState([]);
     const [error, setError] = useState('');
@@ -19,28 +18,26 @@ export default function Exercises() {
      */
     useEffect(() => {
         // We wrap the fetching of muscles in a function so we can call it asynchronous
-        const fetchData = async () => {
+        const fetchMuscles = async () => {
             try {
-                const muscles = await fetchExerciseMuscles();
-                console.log(muscles)
-                setMuscles(muscles);
+                const result = await fetchExerciseMuscles();
+                setMuscles(result);
             } catch (e) {
                 setError(e);
             }
         };
-        fetchData();
+        fetchMuscles();
     }, []);
 
 
     return (
-        <>
         <div id='content'>
             <div class='container'>
                 <div class='backButton' onClick={() => history.push('/')}>&#8592; </div>
                 <div class='containerContent'>
-                    <h3 class='containerTitle'>Find exercises</h3>
+                    <h4 class='containerTitle'>Find exercises</h4>
                     <div id='exerciseSelector'>
-                        <select onChange={(e) => fetchExercises(e.target.value)}>
+                        <select onChange={(e) => fetchExercises(e.target.value, true)}>
                             <option key={null} value='-'>Select a muscle</option>
                             {muscles.map(muscle =>
                                 <option key={muscle.id} value={muscle.id}>{muscle.name}</option>
@@ -48,14 +45,16 @@ export default function Exercises() {
                         </select>
                         {error && <p class='errMssg'>{error}</p>}
                     </div>
-                    <div>
-                        {exercises.map(exercise =>
-                            <Exercise key={exercise.id} exercise={exercise} />
-                        )}
-                    </div>
+                    {exercises.length > 1 &&
+                        <>
+                            <p>To search for the exercise, just click on the exercise of choise.</p>
+                            {exercises.map(exercise =>
+                                <Exercise key={exercise.id} exercise={exercise} />
+                            )}
+                        </>
+                    }
                 </div>
             </div>
         </div>
-        </>
     );
 }
