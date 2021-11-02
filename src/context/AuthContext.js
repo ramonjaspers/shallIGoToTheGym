@@ -96,7 +96,7 @@ export default function AuthContextProvider({ children }) {
         fetchUserData
     };
 
-    // app auth wrapper
+    // context auth wrapper
     return (
         <AuthContext.Provider value={contextData}>
             {isAuth.status === 'done' ? children :

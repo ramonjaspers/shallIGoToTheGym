@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 // import page style
-import '../assets/styles/Tdee.css';
+import '../assets/styles/Tdee.module.css';
 
 export default function TDEE() {
     const history = useHistory();

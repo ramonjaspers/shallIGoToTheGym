@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { WorkoutContext } from '../context/WorkoutContext';
 import jwtDecode from 'jwt-decode';
 import Exercise from '../components/Exercise';
 
 function Profile() {
   const { user, fetchUserData, logout } = useContext(AuthContext);
-  const { workout } = useContext(WorkoutContext);
   const [exercises, setExercises] = useState([])
 
   useEffect(() => {
@@ -26,13 +24,15 @@ function Profile() {
    * @returns void
    */
   const getUserSpecificWorkout = (JWT) => {
-    const token = jwtDecode(JWT);
-    // Get the workout based on the userId stored within the workout object 
-    const workoutObject = workout.filter(obj => {
-      return obj.userId === token
-    });
-    // Set the user specified workout
-    setExercises(workoutObject.exercises);
+    // const token = jwtDecode(JWT);
+    // fetchUserData(localStorage.getItem('workout'));
+    
+    // // Get the workout based on the userId stored within the workout object 
+    // const workoutObject = workout.filter(obj => {
+    //   return obj.userId === token
+    // });
+    // // Set the user specified workout
+    // setExercises(workoutObject.exercises);
   }
 
   return (
