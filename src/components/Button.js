@@ -11,7 +11,7 @@ export default function Button({ link, text, isDisabled }) {
 
     return (
         <button
-            class='customButton'
+            className='customButton'
             onClick={() => navigateTo(link)}
             disabled={isDisabled ?? false}
         >

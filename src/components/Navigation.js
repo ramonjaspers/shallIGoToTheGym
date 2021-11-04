@@ -8,18 +8,18 @@ export default function Navigation() {
   const [showMenu, toggleShowMenu] = useState(false);
 
   return (
-    <div class='row navigation'>
+    <div className='row navigation'>
       <ul id='naviagtionItems'>
-        <li class='appLogo'>
+        <li className='appLogo'>
           <NavLink to="/home">SIGTTG</NavLink>
         </li>
-        <li class='navigationUrl'>
+        <li className='navigationUrl'>
           <NavLink to="/goals">GOAL<br />ADVICE</NavLink>
         </li>
-        <li class='navigationUrl'>
+        <li className='navigationUrl'>
           <NavLink to="/tdee">TDEE<br />CALCULATOR</NavLink>
         </li>
-        <li class='navigationUrl'>
+        <li className='navigationUrl'>
           <NavLink to="/exercises">EXERCISE<br />FINDER</NavLink>
         </li>
         {isAuth ?
@@ -42,7 +42,7 @@ export default function Navigation() {
             ) : null}
           </>
           :
-          <li class='navigationUrl'>
+          <li className='navigationUrl'>
             <NavLink to="/login">Login</NavLink>
           </li>
         }

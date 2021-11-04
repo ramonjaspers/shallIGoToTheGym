@@ -6,15 +6,15 @@ import noImage from '../assets/images/noImage.png';
 
 export default function Exercise({ exercise }) {
     return (
-        <div class='exerciseWrapper'>
+        <div className='exerciseWrapper'>
             {exercise.image
-                ? <img class='exerciseImage' alt={exercise.name} src={exercise.image}></img>
-                : <img class='exerciseImage' alt='no image available' src={noImage}></img>
+                ? <img className='exerciseImage' alt={exercise.name} src={exercise.image}></img>
+                // eslint-disable-next-line jsx-a11y/img-redundant-alt
+                : <img className='exerciseImage' alt='No image available' src={noImage}></img>
             }
-            <div class='exerciseDetails' onClick={() => window.open(`https://google.com/search?q=${exercise.name}`)}>
+            <div className='exerciseDetails' onClick={() => window.open(`https://google.com/search?q=${exercise.name}`)}>
                 <h4>{exercise.name}</h4>
             </div>
-
         </div>
     );
 }

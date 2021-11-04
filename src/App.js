@@ -33,7 +33,7 @@ export default function App() {
     }
 
     return (
-        <div class='box'>
+        <div className='box'>
             <Navigation />
             <>
                 <Switch>

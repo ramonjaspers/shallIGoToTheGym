@@ -21,6 +21,7 @@ export default function AuthContextProvider({ children }) {
     const history = useHistory();
 
     /**
+     * 
      * Mounting phase
      * checks for existing tokens and mounts the state
      */
@@ -41,7 +42,7 @@ export default function AuthContextProvider({ children }) {
      * Sets the user JWT token and IsAuth
      * @param {*} JWT 
      */
-    function login(JWT) {
+    const login = (JWT) => {
         // insert JWT into local storage, fetch user data and set auth = true
         localStorage.setItem('token', JWT);
         //set user data
@@ -55,7 +56,7 @@ export default function AuthContextProvider({ children }) {
      * 
      * Removes the JWT token, sets the authState to false and redirects to the hompeage
      */
-    function logout() {
+    const logout = () => {
         // Remove token and unset authentication
         localStorage.removeItem('token')
         toggleIsAuth({ isAuth: false, user: null, status: 'done' });
@@ -63,7 +64,7 @@ export default function AuthContextProvider({ children }) {
         history.push('/');
     }
 
-    async function fetchUserData(JWT) {
+    const fetchUserData = async (JWT) => {
         // Fetch the user data with the given token
         axios.get(`https://polar-lake-14365.herokuapp.com/api/user`, {
             headers: {
@@ -81,9 +82,9 @@ export default function AuthContextProvider({ children }) {
                 },
                 status: 'done'
             });
-            // If something goes wrong it means the do nothing
+            // If something goes wrong, log error and do nothing
         }).catch((e) => {
-            toggleIsAuth({ isAuth: false, user: null, status: 'done' });
+            toggleIsAuth({ ...isAuth, status: 'done' });
         });
     }
 
@@ -96,7 +97,7 @@ export default function AuthContextProvider({ children }) {
         fetchUserData
     };
 
-    // context auth wrapper
+    // app auth wrapper
     return (
         <AuthContext.Provider value={contextData}>
             {isAuth.status === 'done' ? children :

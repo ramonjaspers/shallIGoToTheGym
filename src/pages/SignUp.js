@@ -32,21 +32,21 @@ function SignUp() {
   }
 
   return (
-    <div class='wrapper'>
-      <div class='container'>
-        <h4 class='containerTitle'>Registreren</h4>
+    <div className='wrapper'>
+      <div className='container'>
+        <h4 className='containerTitle'>Registreren</h4>
         <form onSubmit={handleSubmit(signUp)}>
           <label>Email</label>
           <input type="email" placeholder="email" {...register("email", { required: true, maxLength: 80 })} /> <br />
-          {errors.email && <p class='errMssg'>{errors.api.message}</p>}
+          {errors.email && <p className='errMssg'>{errors.api.message}</p>}
           <label>Password</label>
           <input type="password" placeholder="password" {...register("password", { required: true, maxLength: 100 })} /><br />
-          {errors.password && <p class='errMssg'>{errors.api.message}</p>}
+          {errors.password && <p className='errMssg'>{errors.api.message}</p>}
           <label>Username</label>
           <input type="text" placeholder="username" {...register("username", {})} /><br />
-          {errors.username && <p class='errMssg'>{errors.api.message}</p>}
+          {errors.username && <p className='errMssg'>{errors.api.message}</p>}
           <input type="submit" onClick={() => clearErrors('api')} /><br />
-          {errors.api && <p class='errMssg'>{errors.api.message}</p>}
+          {errors.api && <p className='errMssg'>{errors.api.message}</p>}
 
         </form>
       </div>

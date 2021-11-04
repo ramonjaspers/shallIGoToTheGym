@@ -19,9 +19,9 @@ export default function Login() {
     // Post login data 
     await axios.post(`https://polar-lake-14365.herokuapp.com/api/auth/signin`, {
       ...data
-    }).then((response) => {
+    }).then(({data}) => {
       // On succesfull post try to login with the received accesstoken
-      login(response.data.accessToken);
+      login(data.accessToken);
     }).catch((error) => {
       // Show user error and show real error in console
       console.log(error);
@@ -33,13 +33,13 @@ export default function Login() {
   }
 
   return (
-    <div class='wrapper'>
-      <div class='container'>
-        <h4 class='containerTitle'>Inloggen</h4>
+    <div className='wrapper'>
+      <div className='container'>
+        <h4 className='containerTitle'>Inloggen</h4>
         <form onSubmit={handleSubmit(signIn)}>
           <input type="username" placeholder="username" {...register("username", { required: true, maxLength: 80 })} />
           <input type="password" placeholder="Password" {...register("password", { required: true, maxLength: 100 })} />
-          {errors.api && <p class='errMssg'>{errors.api.message}</p>}
+          {errors.api && <p className='errMssg'>{errors.api.message}</p>}
           <input type="submit" onClick={() => clearErrors('api')} />
           <p>Dont have an account? <Link to="/signup">Sign up</Link> to our platform.</p>
         </form>

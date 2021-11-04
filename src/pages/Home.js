@@ -26,7 +26,7 @@ export default function Home() {
             </div>
             <div id='mainText'>
                 <h1>Our goal</h1>
-                <p class='highlight'>You!</p>
+                <p className='highlight'>You!</p>
                 <p>We want you to achieve your fitness goals and have a healthy lifestyle! We want to do this by informing you about achieving your goals and giving you a slight nudge to go to the gym in a fun and healthy way. We will not force you into going to the gym but will look at all the aspects of you current situation and give advice based on that. Sometimes a rest day is all that you need.</p>
             </div>
             <div id='tiles'>
@@ -57,14 +57,14 @@ export default function Home() {
                 />
             </div>
             <div id='subText'>
-                <div class='textColumn'>
+                <div className='textColumn'>
                     <h3>Tools</h3>
                     <Link to='/Quiz'>Shall i go to the gym?!</Link><br/><br/>
                     <Link to='/Goals'>Goal advice</Link><br/><br/>
                     <Link to='/tdee'>TDEE calculator</Link><br/><br/>
                     <Link to='/exercises'>Exercise searcher</Link><br/><br/>
                 </div>
-                <div class='textColumn'>
+                <div className='textColumn'>
                     <h3>About us</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
                 </div>

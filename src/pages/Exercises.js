@@ -32,10 +32,10 @@ export default function Exercises() {
 
     return (
         <div id='content'>
-            <div class='container'>
-                <div class='backButton' onClick={() => history.push('/')}>&#8592; </div>
-                <div class='containerContent'>
-                    <h4 class='containerTitle'>Find exercises</h4>
+            <div className='container'>
+                <div className='backButton' onClick={() => history.push('/')}>&#8592; </div>
+                <div className='containerContent'>
+                    <h4 className='containerTitle'>Find exercises</h4>
                     <div id='exerciseSelector'>
                         <select onChange={(e) => fetchExercises(e.target.value, true)}>
                             <option key={null} value='-'>Select a muscle</option>
@@ -43,11 +43,11 @@ export default function Exercises() {
                                 <option key={muscle.id} value={muscle.id}>{muscle.name}</option>
                             )};
                         </select>
-                        {error && <p class='errMssg'>{error}</p>}
+                        {error && <p className='errMssg'>{error}</p>}
                     </div>
                     {exercises.length > 1 &&
                         <>
-                            <p>To search for the exercise, just click on the exercise of choise.</p>
+                            <p>To search for the exercise, just click on the exercise of choice.</p>
                             {exercises.map(exercise =>
                                 <Exercise key={exercise.id} exercise={exercise} />
                             )}

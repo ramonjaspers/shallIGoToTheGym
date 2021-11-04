@@ -9,12 +9,10 @@ function Profile() {
   const [exercises, setExercises] = useState([])
 
   useEffect(() => {
+    // if user is set fetch the user data
     if (!user.email) {
       fetchUserData(localStorage.getItem('token'));
-      getUserSpecificWorkout(localStorage.getItem('token'));
-    } else {
-      // force logout
-      logout();
+      // getUserSpecificWorkout(localStorage.getItem('token'));
     }
   }, []);
 
@@ -23,21 +21,21 @@ function Profile() {
    * @param {string} JWT 
    * @returns void
    */
-  const getUserSpecificWorkout = (JWT) => {
-    // const token = jwtDecode(JWT);
-    // fetchUserData(localStorage.getItem('workout'));
-    
-    // // Get the workout based on the userId stored within the workout object 
-    // const workoutObject = workout.filter(obj => {
-    //   return obj.userId === token
-    // });
-    // // Set the user specified workout
-    // setExercises(workoutObject.exercises);
-  }
+  // const getUserSpecificWorkout = (JWT) => {
+  // const token = jwtDecode(JWT);
+  // fetchUserData(localStorage.getItem('workout'));
+
+  // Get the workout based on the userId stored within the workout object 
+  // const workoutObject = workout.filter(obj => {
+  // return obj.userId === token
+  // });
+  // Set the user specified workout
+  // setExercises(workoutObject.exercises);
+  // }
 
   return (
     <div id='content'>
-      <div class='container'>
+      <div className='container'>
         {/* left bar */}
         <section>
           <h2>Gegevens</h2>
@@ -45,9 +43,9 @@ function Profile() {
           <p><strong>Email: </strong>{user.email}</p>
         </section>
         <section>
-          {exercises.length > 1 ?
+          {exercises && exercises.length > 0 ?
             <>
-              <p>To search for the exercise, just click on the exercise of choise.</p>
+              <p>To search for the exercise, just click on the exercise of choice.</p>
               {exercises.map(exercise =>
                 <Exercise key={exercise.id} exercise={exercise} />
               )}
