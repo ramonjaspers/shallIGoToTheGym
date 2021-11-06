@@ -33,7 +33,7 @@ function SignUp() {
     } else {
       setError("repeatedPassword", {
         type: "manual",
-        message: "Password do not match.",
+        message: "Passwords do not match.",
       });
     }
   }
@@ -45,16 +45,16 @@ function SignUp() {
         <form onSubmit={handleSubmit(signUp)}>
           <label>Email</label>
           <input type="email" placeholder="email" {...register("email", { required: true, maxLength: 80 })} /> <br />
-          {errors.email && <p className='errMssg'>{errors.api.message}</p>}
+          {errors.email && <p className='errMssg'>{errors.email.message}</p>}
           <label>Password</label>
           <input type="password" placeholder="password" {...register("password", { required: true, maxLength: 100 })} /><br />
-          {errors.password && <p className='errMssg'>{errors.api.message}</p>}
+          {errors.password && <p className='errMssg'>{errors.password.message}</p>}
           <label>Repeat your password</label>
           <input type="repeatedPassword" placeholder="Repeat password" {...register("repeatedPassword", { required: true, maxLength: 100 })} /><br />
-          {errors.repeatedPassword && <p className='errMssg'>{errors.api.message}</p>}
+          {errors.repeatedPassword && <p className='errMssg'>{errors.repeatedPassword.message}</p>}
           <label>Username</label>
           <input type="text" placeholder="username" {...register("username", {})} /><br />
-          {errors.username && <p className='errMssg'>{errors.api.message}</p>}
+          {errors.username && <p className='errMssg'>{errors.username.message}</p>}
           <input type="submit" onClick={() => clearErrors('api')} /><br />
           {errors.api && <p className='errMssg'>{errors.api.message}</p>}
 
