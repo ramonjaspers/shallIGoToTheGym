@@ -1,7 +1,6 @@
 // Import react module and components
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
 
 /**
  * 
@@ -10,19 +9,15 @@ import { AuthContext } from '../context/AuthContext';
  */
 export default function useWorkoutState() {
     // Set default states
-    const { user } = useContext(AuthContext);
-    const [workout, setWorkout] = useState([]);
-    const [exercises, setExercises] = useState([]);
-
 
     /**
-     * Fetches exercises based on given params
+     * Fetches and sets exercises based on given params
      * @param {int|null} muscleId 
      * @param {bool} withImages 
      * @param {int} equipment 
      * @param {array} exerciseCatagories
      */
-    const fetchExercises = async (muscleId, withImages = false, equipment, exerciseCatagories) => {
+    const fetchExercises = async (muscleId, equipment, exerciseCatagories, withImages = false) => {
         try {
             // create a URLSearchParam object so its possible to pass multiple the same keys with different values
             const apiParams = new URLSearchParams();
@@ -53,17 +48,14 @@ export default function useWorkoutState() {
                 });
 
                 const exercisesWithImage = await Promise.all(promises);
-                console.log(exercisesWithImage);
-
-                setExercises(exercisesWithImage);
+                return exercisesWithImage;
             } else {
-                setExercises(data.results)
+                return data.results;
             }
             // Set the set the exercises
         } catch (e) {
-            // if something goes wrong throw an error
+            // if something goes wrong do nothing
             console.log(e);
-            throw new Error('Fetching the exercises failed.');
         }
     }
 
@@ -110,12 +102,6 @@ export default function useWorkoutState() {
         }
     }
 
-    /**
-     * Call to clear the workout data since we do not want to alter the state out of this stateHandler
-     */
-    const clearWorkoutData = () => {
-        setWorkout([]);
-    }
 
     /**
      * catagory 2 = Lower body
@@ -142,7 +128,7 @@ export default function useWorkoutState() {
      */
     const generateWorkoutAdvice = async (exerciseCatagory, equipment, comment) => {
         if (exerciseCatagory === 4) {
-            setWorkout([{ comment: comment }]);
+            return { comment: comment };
         } else if (exerciseCatagory === 1) {
             const cardioList = equipment === 7
                 ? ['brisk walking', 'jogging', 'swimming', 'cycling', 'jumping rope', 'playing soccer/kick ball', 'roller blading', 'skate boarding']
@@ -152,30 +138,18 @@ export default function useWorkoutState() {
             do {
                 // Make sure we dont have duplicates
                 secondExercise = cardioList[Math.floor(Math.random() * cardioList.length)];
-            } while (firstExercise === secondExercise)
-            setWorkout([{ comment: comment, workout: [firstExercise, secondExercise] }]);
+            } while (firstExercise === secondExercise);
+            return { comment: comment, workout: [firstExercise, secondExercise] };
         } else {
             const exerciseCatagories = getExerciseCatagories(exerciseCatagory);
-            await fetchExercises(null, false, equipment, exerciseCatagories);
-            const token = localStorage.getItem('token');
-            if (user && user.id) {
-                // set the workout in the localStorage for user usage
-                const storedWorkout = localStorage.getItem('workout' + user.id);
-                if (storedWorkout) {
-                    localStorage.removeItem('workout' + user.id);
-                }
-                localStorage.setItem('workout' + user.id, { 'workout': workout });
-            }
-            setWorkout([{ comment: comment, workout: workout }])
+            const workout = await fetchExercises(null, equipment, exerciseCatagories);
+
+            return comment ? { comment: comment, workout: workout } : {workout}; ;
         }
     }
 
 
     return {
-        workout,
-        clearWorkoutData,
-        exercises,
-        setExercises,
         fetchExercises,
         fetchExerciseImg,
         fetchExerciseMuscles,

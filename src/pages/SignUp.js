@@ -15,20 +15,27 @@ function SignUp() {
    * @param {*} data 
    */
   const signUp = async (data) => {
-    // Register with form data
-    await axios.post(`https://polar-lake-14365.herokuapp.com/api/auth/signup`, {
-      ...data,
-      'role': ['user']
-    }).then(() => {
-      alert('User created succesfully');
-      history.push('/login');
-    }).catch((e) => {
-      // Show user error and show real error in console
-      setError("api", {
-        type: "manual",
-        message: "Invalid user or user already exists",
+    if (data.password === data.repeatedPassword) {
+      // Register with form data
+      await axios.post(`https://polar-lake-14365.herokuapp.com/api/auth/signup`, {
+        ...data,
+        'role': ['user']
+      }).then(() => {
+        alert('User created succesfully');
+        history.push('/login');
+      }).catch((e) => {
+        // Show user error and show real error in console
+        setError("api", {
+          type: "manual",
+          message: "Invalid user or user already exists",
+        });
       });
-    });
+    } else {
+      setError("repeatedPassword", {
+        type: "manual",
+        message: "Password do not match.",
+      });
+    }
   }
 
   return (
@@ -42,6 +49,9 @@ function SignUp() {
           <label>Password</label>
           <input type="password" placeholder="password" {...register("password", { required: true, maxLength: 100 })} /><br />
           {errors.password && <p className='errMssg'>{errors.api.message}</p>}
+          <label>Repeat your password</label>
+          <input type="repeatedPassword" placeholder="Repeat password" {...register("repeatedPassword", { required: true, maxLength: 100 })} /><br />
+          {errors.repeatedPassword && <p className='errMssg'>{errors.api.message}</p>}
           <label>Username</label>
           <input type="text" placeholder="username" {...register("username", {})} /><br />
           {errors.username && <p className='errMssg'>{errors.api.message}</p>}

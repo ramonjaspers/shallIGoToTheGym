@@ -1,8 +1,6 @@
-import { useState } from 'react';
-import useWorkoutState from './WorkoutState';
+import { useState, useEffect } from 'react';
 export default function useQuestionState() {
-    const { generateWorkoutAdvice } = useWorkoutState();
-    const [currentQuestion, setCurrentQuestion] = useState({ questionText: null, questionScore: null, answerOptions: [] });
+    const [currentQuestion, setCurrentQuestion] = useState({ questionText: null, questionScore: 0, answerOptions: [] });
     const [comment, setComment] = useState('');
     const [equipment, setEquipment] = useState(null);
     const [workoutType, setWorkoutType] = useState(null);
@@ -46,7 +44,6 @@ export default function useQuestionState() {
                 { text: 'Lazy', points: 3 },
                 { text: 'Tired', points: 3 },
                 { text: 'Exhausted', points: 2 },
-
             ],
         },
         {
@@ -57,7 +54,6 @@ export default function useQuestionState() {
                 { text: 'Lower body', points: 3, workoutType: 3, comment: 'Take it easy, dont go too hard' },
                 { text: 'core/internally/sick', points: 999, comment: 'Take some rest, get better soon!' },
                 { text: 'There are none', points: 2 },
-
             ],
         },
         {
@@ -66,7 +62,6 @@ export default function useQuestionState() {
             answerOptions: [
                 { text: 'Mentally', points: 1, comment: 'Exercising can help lower mental stress/exhaustion.' },
                 { text: 'Physically', points: 999, comment: 'Take some rest, consider taking a walk outside.' },
-
             ],
         },
         {
@@ -98,29 +93,31 @@ export default function useQuestionState() {
 
     /**
      * Sets possble states and set the next question based on the given answer
-     * @param {answerOption} 
+     * @param {*} answer 
+     * @returns {object|void} workout
      */
-    const handleAnswerOptionClick = (answer) => {
-        if (answer.comment) {
-            setComment(answer.comment);
-        }
-        if (answer.workoutType) {
-            setWorkoutType(answer.workoutType);
-        }
-        if (answer.equipment) {
-            setEquipment(answer.equipment);
-        }
+    const handleAnswer = async (answer) => {
         const nextQuestionScore = currentQuestion.questionScore + answer.points;
+        // Set the newest data or keep the old
+        const currentComment = answer.comment ?? comment ?? '';
+        const currentWorkoutType = answer.workoutType ?? workoutType ?? '';
+        const currentEquipment = answer.equipment ?? equipment ?? '';
+        // Preserve data
+        setComment(currentComment);
+        setWorkoutType(currentWorkoutType);
+        setEquipment(currentEquipment);
+
         if (nextQuestionScore > 7) {
             if (nextQuestionScore > 900) {
-                generateWorkoutAdvice(4, equipment, comment);
+                return { catagory: 4, equipment: currentEquipment, comment: currentComment };
             } else {
-                generateWorkoutAdvice(workoutType, equipment, comment);
+                return { catagory: workoutType, equipment: currentEquipment, comment: currentComment };
             }
         } else {
             const newQuestion = getQuestion(nextQuestionScore);
             setCurrentQuestion(newQuestion);
         }
+        return {};
     }
 
     /**
@@ -138,6 +135,6 @@ export default function useQuestionState() {
         getQuestion,
         setCurrentQuestion,
         clearQuestionData,
-        handleAnswerOptionClick,
+        handleAnswer,
     }
 };

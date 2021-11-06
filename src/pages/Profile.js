@@ -12,8 +12,9 @@ function Profile() {
     // if user is set fetch the user data
     if (!user.email) {
       fetchUserData(localStorage.getItem('token'));
-      // getUserSpecificWorkout(localStorage.getItem('token'));
     }
+      // getUserSpecificWorkout(localStorage.getItem('token'));
+
   }, []);
 
   /**
