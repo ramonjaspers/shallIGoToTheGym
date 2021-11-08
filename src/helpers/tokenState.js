@@ -4,8 +4,8 @@ import jwtDecode from 'jwt-decode';
  * 
  * Calculates if a token is within expiry time.
  * returns true if token is still within expiry time, false when expiration time is exceeded
- * @param {*} jwtToken 
- * @returns bool
+ * @param {JwtPayload} jwtToken 
+ * @returns {bool}
  */
 export default function tokenState(jwtToken) {
     // Decode the json web token 

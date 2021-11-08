@@ -1,0 +1,30 @@
+label {
+  float: left;
+  font-weight: bold;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0 auto; /* or margin: 0 auto 0 auto */
+}
+
+th {
+  padding: 0 20px 0 20px;
+  border-bottom: 2px solid #f2c300;
+  border-right: 2px solid #f2c300;
+}
+td {
+  padding: 0 20px 0 20px;
+  border-right: 2px solid #f2c300;
+}
+
+td:last-child,
+th:last-child {
+  border-right: none;
+}
+
+@media screen and (max-width: 750) {
+  th, td {
+    padding: 0 0 0 0;
+  }
+}

@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-// style import
-import '../assets/styles/Auth.css';
+// background image
+import defaultBG from '../assets/images/defaultBG.jpeg';
 
 export default function Login() {
   // Init hooks
@@ -19,7 +19,7 @@ export default function Login() {
     // Post login data 
     await axios.post(`https://polar-lake-14365.herokuapp.com/api/auth/signin`, {
       ...data
-    }).then(({data}) => {
+    }).then(({ data }) => {
       // On succesfull post try to login with the received accesstoken
       login(data.accessToken);
     }).catch((error) => {
@@ -30,17 +30,25 @@ export default function Login() {
         message: "User not found!",
       });
     });
-  }
+  };
 
   return (
-    <div className='wrapper'>
+    <div className='content' style={{ backgroundImage: `url(${defaultBG})` }}>
       <div className='container'>
         <h4 className='containerTitle'>Inloggen</h4>
         <form onSubmit={handleSubmit(signIn)}>
-          <input type="username" placeholder="username" {...register("username", { required: true, maxLength: 80 })} />
-          <input type="password" placeholder="Password" {...register("password", { required: true, maxLength: 100 })} />
+          <input type="text" placeholder="username" {...register("username", {
+            required: 'Username is required.',
+            maxLength: { value: 80, message: 'Invalid username given.' }
+          })} /><br />
+          {errors.username && <p className='errMssg'>{errors.username.message}</p>}
+          <input type="password" placeholder="Password" {...register("password", {
+            required: 'Password is required.',
+            maxLength: { value: 100, message: 'Invalid password given.' }
+          })} /><br />
+          {errors.password && <p className='errMssg'>{errors.password.message}</p>}
           {errors.api && <p className='errMssg'>{errors.api.message}</p>}
-          <input type="submit" onClick={() => clearErrors('api')} />
+          <input className="defaultButton" type="submit" onClick={() => clearErrors('api')} /><br />
           <p>Dont have an account? <Link to="/signup">Sign up</Link> to our platform.</p>
         </form>
       </div>

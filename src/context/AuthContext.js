@@ -7,6 +7,9 @@ import Loader from "react-loader-spinner";
 // import helpers
 import tokenState from '../helpers/tokenState.js';
 
+/**
+ * Serves a context which holds the context data in the app so it can be accessed wherever
+ */
 export const AuthContext = createContext({});
 
 /**

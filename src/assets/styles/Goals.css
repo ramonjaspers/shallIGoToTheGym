@@ -1,15 +1,13 @@
-.column {
-  float: left;
-  width: 33.33%;
-  display: flex;
-  flex: auto;
-  align-items: center;
-  justify-content: center;
+.columnWrapper {
+  flex: 33.33%;
 }
 
-.row {
-  height: 100%;
+.rowGoals {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   width: 100%;
+  height: 100%;
 }
 
 .musclegain,
@@ -22,7 +20,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
 }
+
 .musclegain {
   background-image: url("../images/muscleGain.jpeg");
 }
@@ -32,14 +32,15 @@
 .maintenance {
   background-image: url("../images/maintaining.png");
 }
-.musclegain:hover,
-.weightloss:hover,
-.maintenance:hover {
+/* only add hover to classes WITH column class */
+.column.musclegain:hover,
+.column.weightloss:hover,
+.column.maintenance:hover {
   opacity: 0.5;
 }
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 13750px) {
   .column {
     width: 100%;
   }

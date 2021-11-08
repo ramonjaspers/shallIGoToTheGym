@@ -1,19 +1,23 @@
-import { useState, useEffect } from 'react';
+// import useState so we can use react hooks
+import { useState } from 'react';
+
 export default function useQuestionState() {
+    // basic state set
     const [currentQuestion, setCurrentQuestion] = useState({ questionText: null, questionScore: 0, answerOptions: [] });
     const [comment, setComment] = useState('');
     const [equipment, setEquipment] = useState(null);
     const [workoutType, setWorkoutType] = useState(null);
 
+    // question in array format so we can loop over it
     const questions = [
         {
             questionText: 'Howmany times did you exercise in the last 7 days?',
             questionScore: 0,
             answerOptions: [
-                { text: '0 times', points: 1, comment: 'Try to do light exercises atleast 2 times a week.' },
-                { text: '1-2 times', points: 1 },
-                { text: '3-4 times', points: 1 },
-                { text: '5-6 times', points: 999, comment: 'Take some rest, your body needs rest to heal' },
+                { text: '0-1 times', points: 1, comment: 'Try to do light exercises atleast 2 times a week.' },
+                { text: '2-3 times', points: 1 },
+                { text: '4-5 times', points: 1 },
+                { text: 'more than 5 times', points: 999, comment: 'Take some rest, your body needs rest to heal' },
             ],
         },
         {
@@ -31,8 +35,8 @@ export default function useQuestionState() {
             questionScore: 2,
             answerOptions: [
                 { text: '<4 hours', points: 999, comment: 'Get some more rest.' },
-                { text: '5-6 hours', points: 1, comment: 'Try to get some more sleep next tonight.' },
-                { text: '6-7', points: 1 },
+                { text: '5-6 hours', points: 1, comment: 'Try these to get some more sleep tonight.' },
+                { text: '6-7 hours', points: 1 },
                 { text: '>8 hours', points: 1 },
             ],
         },
@@ -60,7 +64,7 @@ export default function useQuestionState() {
             questionText: 'What type of exhausted are you',
             questionScore: 5,
             answerOptions: [
-                { text: 'Mentally', points: 1, comment: 'Exercising can help lower mental stress/exhaustion.' },
+                { text: 'Mentally', points: 1, comment: 'Exercising can help lower mental stress and exhaustion.' },
                 { text: 'Physically', points: 999, comment: 'Take some rest, consider taking a walk outside.' },
             ],
         },
@@ -78,8 +82,8 @@ export default function useQuestionState() {
             questionText: 'Do you have a gym membership?',
             questionScore: 7,
             answerOptions: [
-                { text: 'No', points: 1 },
-                { text: 'yes', points: 1, equipment: 7 },
+                { text: 'No', points: 1, equipment: 7 },
+                { text: 'yes', points: 1 },
             ],
         },
     ];
@@ -97,6 +101,8 @@ export default function useQuestionState() {
      * @returns {object|void} workout
      */
     const handleAnswer = async (answer) => {
+        console.log(answer);
+        console.log(equipment);
         const nextQuestionScore = currentQuestion.questionScore + answer.points;
         // Set the newest data or keep the old
         const currentComment = answer.comment ?? comment ?? '';
@@ -106,7 +112,6 @@ export default function useQuestionState() {
         setComment(currentComment);
         setWorkoutType(currentWorkoutType);
         setEquipment(currentEquipment);
-
         if (nextQuestionScore > 7) {
             if (nextQuestionScore > 900) {
                 return { catagory: 4, equipment: currentEquipment, comment: currentComment };
@@ -117,6 +122,7 @@ export default function useQuestionState() {
             const newQuestion = getQuestion(nextQuestionScore);
             setCurrentQuestion(newQuestion);
         }
+        // Return empty object with no props since the quiz hasnt finished
         return {};
     }
 
@@ -128,6 +134,7 @@ export default function useQuestionState() {
         setEquipment(null);
         setWorkoutType(null);
     }
+
     // return the props we want to use in external files 
     return {
         currentQuestion,

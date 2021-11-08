@@ -24,7 +24,7 @@ export default function App() {
      * @param {object} rest provides the data
      * @returns 
      */
-    function PrivateRoute({ children, authState, ...rest }) {
+    const PrivateRoute = ({ children, authState, ...rest }) => {
         return (
             <Route {...rest}>
                 {authState ? children : <Redirect to="/" />}

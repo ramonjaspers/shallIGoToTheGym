@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import jwtDecode from 'jwt-decode';
 import Exercise from '../components/Exercise';
 
-function Profile() {
+export default function Profile() {
   const { user, fetchUserData, logout } = useContext(AuthContext);
   const [exercises, setExercises] = useState([])
 
@@ -60,5 +60,3 @@ function Profile() {
     </div>
   );
 }
-
-export default Profile;

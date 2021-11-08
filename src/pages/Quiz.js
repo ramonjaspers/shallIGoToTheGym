@@ -1,3 +1,5 @@
+// imports
+// modules/dependencies
 import React, { useEffect, useState, useContext } from 'react';
 import useQuestionState from '../helpers/QuestionState';
 import useWorkoutState from '../helpers/WorkoutHelper';
@@ -5,7 +7,10 @@ import Exercise from '../components/Exercise';
 import { useHistory } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
 // style import
-import '../assets/styles/Auth.css';
+import '../assets/styles/Quiz.css'
+// image import
+import defaultBG from '../assets/images/defaultBG.jpeg';
+import Loader from 'react-loader-spinner';
 
 export default function Quiz() {
   const {
@@ -18,7 +23,8 @@ export default function Quiz() {
   } = useQuestionState();
   const { generateWorkoutAdvice } = useWorkoutState();
   const { user } = useContext(AuthContext);
-  const [workout, setWorkout] = useState([]);
+  const [workout, setWorkout] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
   const history = useHistory();
 
 
@@ -29,12 +35,6 @@ export default function Quiz() {
     }
   }, [workout]);
 
-
-  const tryAgain = () => {
-    setWorkout([]);
-    clearQuestionData();
-    history.push('/quiz');
-  }
 
   /**
    * 
@@ -47,9 +47,10 @@ export default function Quiz() {
       if (storedWorkout) {
         localStorage.removeItem('workout' + user.id);
       }
-      localStorage.setItem('workout' + user.id, { 'workout': workout, 'comment': advice.comment });
+      localStorage.setItem('workout' + user.id, { 'workout': advice.workout, 'comment': advice.comment });
     }
-    setWorkout([{ 'exercises': workout, 'comment': advice.comment }]);
+    setWorkout({ 'exercises': advice.workout, 'comment': advice.comment });
+    setIsProcessing(false);
   }
 
   const onclickHandler = async (userInput) => {
@@ -59,48 +60,56 @@ export default function Quiz() {
       && result.equipment !== undefined
       && result.comment !== undefined
     ) {
+      setIsProcessing(true);
       // If we recieved an object with the props needed fetch workout advice
+      console.log(result.equipment);
       const advice = await generateWorkoutAdvice(result.catagory, result.equipment, result.comment);
       storeWorkout(advice);
     }
   };
 
-  console.log(workout);
-
   return (
-    <div className='wrapper'>
+    <div className='content' style={{ backgroundImage: `url(${defaultBG})` }}>
       <div className='container'>
-        <>
-          {!workout.length > 0 ?
-            <>
-              <div className='question-section'>
-                <div className='question-count'>
-                  <span>Progress {currentQuestion.questionScore / (questions.length) * 100}% </span>
-                </div>
-                <div className='question-text'>{currentQuestion.questionText}</div>
-              </div>
-              <div className='answer-section'>
-                {currentQuestion.answerOptions.map((option, key) => (
-                  <button key={key} onClick={() => onclickHandler(option)}>{option.text}</button>
-                ))}
-              </div>
-            </>
+        <div className='backButton' onClick={() => history.push('/')}>&#8592;</div>
+        <div className='containerContent'>
+          {isProcessing
+            ? <>
+                <h6> Loading exercises... </h6>
+                <Loader type="TailSpin" color="#00BFFF" height={'10vw'} width={'10vw'} />
+              </>
             : <>
-              <h2>Result</h2>
-              {workout.comment && <div className='question-text'>{workout.comment}</div>}
-              <p>Not happy with the result?</p>
-              <button onClick={() => tryAgain()}>Try again</button>
-              {workout.exercises.length > 0 &&
+              {!workout ?
                 <>
-                  <h3>Your workout for today</h3>
-                  {workout.exercises.map(exercise =>
-                    <Exercise key={exercise.id} exercise={exercise} />
-                  )}
+                  <h4>Progress {currentQuestion.questionScore / (questions.length) * 100}%</h4>
+                  <h5>{currentQuestion.questionText}</h5>
+                  {currentQuestion.answerOptions.map((option, key) => (
+                    <button className='questionAnswer' key={key} onClick={() => onclickHandler(option)}>{option.text}</button>
+                  ))}
+                </>
+                :
+                <>
+                  <h2>Result</h2>
+                  {workout.comment && <h4>{workout.comment}</h4>}
+                  <p>Not happy with the result?</p>
+                  {/** 
+               *history.go() foreces a refresh on the last set history value. 
+               *On refresh we also lose the states which we want to start over.
+               **/}
+                  <button onClick={() => history.go()}>Try again</button>
+                  {workout.exercises && workout.exercises.length > 0 &&
+                    <>
+                      <h5>Give the following exercises a try</h5>
+                      {workout.exercises.map(exercise =>
+                        <Exercise key={exercise.id} exercise={exercise} />
+                      )}
+                    </>
+                  }
                 </>
               }
             </>
           }
-        </>
+        </div>
       </div>
     </div>
   );

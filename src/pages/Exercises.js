@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import Exercise from '../components/Exercise';
 import useWorkoutState from '../helpers/WorkoutHelper';
 import Loader from 'react-loader-spinner';
-// import page style
-import '../assets/styles/Exercises.css';
+// import BG image
+import exercisesBG from '../assets/images/exercises.jpeg';
 
 export default function Exercises() {
     const { fetchExerciseMuscles, fetchExercises } = useWorkoutState();
@@ -36,17 +36,16 @@ export default function Exercises() {
      * @param {SyntheticBaseEvent} e or event is the full node with the whole dataobject in it 
      */
     const getExercises = async (e) => {
-        console.log(e);
         // Set the exercise state to processing
         setExercises({ ...exercises, processing: true });
         // e.target.value is the user selected value
-        const result = await fetchExercises(e.target.value, null, [], true);
+        const result = await fetchExercises(e.target.value, null, []);
         // After the exercises are fetched set them in the state and toggle the processing off
         setExercises({ exercises: result, processing: false });
     }
 
     return (
-        <div id='content'>
+        <div className='content' style={{ backgroundImage: `url(${exercisesBG})` }}>
             <div className='container'>
                 <div className='backButton' onClick={() => history.push('/')}>&#8592; </div>
                 <div className='containerContent'>

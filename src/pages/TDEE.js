@@ -1,26 +1,37 @@
-// Import react module and components
+// Imports
+// React module and components
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-// import page style
-import '../assets/styles/Tdee.module.css';
+// styles
+import '../assets/styles/Tdee.css';
+// images
+import weightlossBG from '../assets/images/weightlossBG.jpeg';
 
+/**
+ * @returns {HMTL} html node
+ */
 export default function TDEE() {
     const history = useHistory();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [TDEE, setTdee] = useState(0);
+    const [BMR, setBmr] = useState(0);
 
     /**
      * Generates the TDEE
      * @param {*} formData 
      */
     const calculateTdee = (formData) => {
-        // Harris-Benedict formula, 95% confidence range
-        const bmr = (10 * formData.Weight) + (6.25 * formData.Height) - (5 * formData.Age)(formData.Gender === 'Male' ? +5 : -161);
+        // Harris-Benedict formula, w/95% confidence range
+        const bmr = (10 * formData.Weight) + (6.25 * formData.Height) - (5 * formData.Age) + (formData.Gender === 'Male' ? +5 : -161);
         // Activity Multiplier
+        setBmr(bmr);
         setTdee(bmr * formData.Activity);
-    }
+    };
 
+    /**
+     * Navigate back to previous page, if TDEE is set return to main tdee view
+     */
     const navigateBack = () => {
         if (TDEE === 0) {
             history.push('/');
@@ -28,10 +39,10 @@ export default function TDEE() {
             setTdee(0);
             history.push('TDEE');
         }
-    }
+    };
 
     return (
-        <div id='pageWrapper'>
+        <div className='content' style={{ backgroundImage: `url(${weightlossBG})` }}>
             <div className='container'>
                 <div className='backButton' onClick={() => navigateBack()}>&#8592; </div>
                 {TDEE === 0 ?
@@ -80,14 +91,16 @@ export default function TDEE() {
                                     <option value="1.9">Athlete (2x per day)</option>
                                 </select><br />
                                 {errors.Activity && <span className="errMssg">{errors.Activity.message}</span>} <br />
-                                <input type="submit" />
+                                <input className='defaultButton' type="submit" />
                             </form>
                         </div>
                     </>
                     :
                     <>
                         <div className='containerContent'>
-                            <h4 className='containerTitle'>Your TDEE</h4>
+                            <h4 className='containerTitle'>Your result</h4>
+                            <h5>BMR: {Math.floor(BMR)} </h5>
+                            <h5>TDEE: {Math.floor(TDEE)} </h5>
                             <p>TDEE is the total number of calories that your body expends in 24 hours, including all
                                 activities. It can vary widely in populations and is much higher for athletes or extremely
                                 active individuals. Caloric requirements may also vary among similarly active individuals
