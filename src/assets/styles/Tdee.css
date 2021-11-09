@@ -7,7 +7,7 @@ label {
 
 table {
   border-collapse: collapse;
-  margin: 0 auto; /* or margin: 0 auto 0 auto */
+  margin: 0 auto;
 }
 
 th {
@@ -24,7 +24,7 @@ td:last-child,
 th:last-child {
   border-right: none;
 }
-#genderChoice{
+#genderChoice {
   padding-right: 170px;
 }
 
@@ -35,14 +35,11 @@ th:last-child {
   }
 
   label {
-    /* display: block; */
-    /* padding-top: 10px; */
     width: auto;
   }
 
-  #genderChoice{
+  #genderChoice {
     padding-right: 0;
     width: auto;
-
   }
 }

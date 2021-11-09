@@ -60,32 +60,32 @@ export default function TDEE() {
                             </p>
                             <form onSubmit={handleSubmit(calculateTdee)}>
                                 <div id='genderChoice'>
-                                    <label>Gender: </label>
+                                    <label><b>Gender:</b> </label>
                                     <span>Male</span>
                                     <input {...register("Gender", { required: 'A gender is required' })} type="radio" value="Male" />
                                     <span>Female</span>
                                     <input {...register("Gender", { required: 'A gender is required' })} type="radio" value="Female" />
                                 </div><br />
                                 {errors.Gender && <span className="errMssg">{errors.Gender.message}</span>} <br />
-                                <label>Age:</label>
+                                <label><b>Age:</b></label>
                                 <input type="number" placeholder="24" {...register("Age", {
                                     required: 'Age is required',
                                     maxLength: { value: 3, message: 'Invalid age given' }
                                 })} /><br />
                                 {errors.Age && <span className="errMssg">{errors.Age.message}</span>} <br />
-                                <label>Weigth:</label>
+                                <label><b>Weigth:</b></label>
                                 <input type="number" placeholder="73" {...register("Weight", {
                                     required: 'Weight is required',
                                     maxLength: { value: 3, message: 'Invalid weight given' }
                                 })} /><br />
                                 {errors.Weight && <span className="errMssg">{errors.Weight.message}</span>} <br />
-                                <label>Height (CM):</label>
+                                <label><b>Height (CM):</b></label>
                                 <input type="number" placeholder="183" {...register("Height", {
                                     required: 'Height is required',
                                     maxLength: { value: 3, message: 'Invalid height given' }
                                 })} /><br />
                                 {errors.Height && <span className="errMssg">{errors.Height.message}</span>} <br />
-                                <label>Activity</label>
+                                <label><b>Activity</b></label>
                                 <select {...register("Activity", { required: true })}>
                                     <option value="1.2">Sedentary (office job)</option>
                                     <option value="1.375">Light Exercise (1-2 days/week)</option>

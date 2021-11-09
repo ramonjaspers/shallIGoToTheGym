@@ -95,6 +95,7 @@ export default function Profile() {
                           e.preventDefault();
                         }}>
                           <input type='email' name='email' placeholder='new email' /><br />
+                          <button type='button' onClick={ () => setIsUpdating(null)} className='cancelButton'>Cancel</button>
                           <button type='submit' className='defaultButton'>Save</button>
                         </form>
                       }
@@ -103,6 +104,7 @@ export default function Profile() {
                           <input type='password' name='pass' placeholder='Password' /><br />
                           <input type='password' name='scndPass' placeholder='Repeat password' /> <br />
                           {userNotice.type === 'password' && <p className='errMssg'>{userNotice.message}</p>}
+                          <button type='button' onClick={ () => setIsUpdating(null)} className='cancelButton'>Cancel</button>
                           <button type='submit' className='defaultButton'>Save</button>
                         </form>
                       }

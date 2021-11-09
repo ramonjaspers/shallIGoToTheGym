@@ -1,6 +1,12 @@
 import React from 'react';
 import Button from './Button';
-export default function Tile({ image, title, text, goTo, buttonText}) {
+
+/**
+ * renders a tile with an image or text
+ * @param {render} 
+ * @returns 
+ */
+export default function Tile({ image, title, text, goTo, buttonText }) {
     return (
         <section>
             {image

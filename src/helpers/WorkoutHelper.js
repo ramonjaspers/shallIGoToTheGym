@@ -8,14 +8,14 @@ import axios from 'axios';
  */
 export default function useWorkoutState() {
     /**
+     * 
      * Fetches exercises from given params and/or the external API
-     * @param {*} muscleId 
-     * @param {*} equipment 
-     * @param {*} exerciseCatagories 
-     * @param {*} withImages 
+     * @param {int} muscleId 
+     * @param {int} equipment 
+     * @param {array} exerciseCatagories 
      * @returns {array|promise|string} Returns array of exercises of error string
      */
-    const fetchExercises = async (muscleId, equipment, exerciseCatagories, withImages = false) => {
+    const fetchExercises = async (muscleId, equipment, exerciseCatagories) => {
         try {
             // create a URLSearchParam object so we can pass multiple the same keys with different values
             const apiParams = new URLSearchParams();
@@ -57,7 +57,7 @@ export default function useWorkoutState() {
     /**
      * 
      * @param {int|null} muscleId 
-     * @returns {array|promise}
+     * @returns {promise|Error}
      */
     const fetchExerciseMuscles = async (muscleId) => {
         return axios.get(`https://wger.de/api/v2/muscle/${muscleId ?? ''}/?language=2`, {
@@ -67,12 +67,16 @@ export default function useWorkoutState() {
         }).then(({ data }) => {
             return muscleId ? data : data.results;
         }).catch((e) => {
-            // if something goes throw error
+            // if something goes wrong throw error
             throw new Error('Failed to get the muscles from the external api');
         });
     }
 
-
+    /**
+     * Fetches an image from the external WGER API based on the given excercise ID
+     * @param {int} exerciseId 
+     * @returns {|bool}
+     */
     const fetchExerciseImg = async (exerciseId) => {
         try {
             const { data } = await axios.get(`https://wger.de/api/v2/exerciseimage/`, {
@@ -85,17 +89,18 @@ export default function useWorkoutState() {
                     "Content-Type": "application/json",
                 },
             });
+            // get the last result from data
             const imageObj = data ? data.results.pop() : false;
-
-            return imageObj ? imageObj.image : '';
+            // get the image from the imageobject, if there is none return false
+            return imageObj ? imageObj.image : false;
         } catch (e) {
-            // if something goes wrong, logg error and return false
-            console.log(e);
+            // if something goes wrong return false so we dont get a picture and can continue the happy flow
             return false;
         }
     }
 
     /**
+     * returns the api catagories based on question catagory result
      * catagory 2 = Lower body
      * catagory 3 = Lower body
      * source for integers used: wger.de/api/v2/exercisecategory
@@ -114,18 +119,20 @@ export default function useWorkoutState() {
 
     /**
      * Generates workout advice based on given params
-     * @param {*} exerciseCatagory 
-     * @param {*} equipment 
-     * @param {*} comment 
+     * @param {int} exerciseCatagory 
+     * @param {int} equipment 
+     * @param {string} comment 
+     * @returns {{Error}|{comment, workout}}
      */
     const generateWorkoutAdvice = async (exerciseCatagory, equipment, comment) => {
         if (exerciseCatagory === 4) {
             return { comment: comment };
         } else if (exerciseCatagory === 1) {
+            // generate a custom cardio list
             const cardioList = equipment === 7
                 ? [{ name: 'brisk walking' }, { name: 'jogging' }, { name: 'swimming' }, { name: 'cycling' }, { name: 'jumping rope' }, { name: 'playing soccer/kick ball' }, { name: 'roller blading' }, { name: 'skate boarding' }]
                 : [{ name: 'Treadmill' }, { name: 'Stepping machine' }, { name: 'Stationairy cycle' }, { name: 'Rowing machine' }, { name: 'Stair climber' }];
-            // get random exercises from the cardio list
+            // get 2 random exercises from the cardio list
             const exercises = cardioList.sort(() => .5 - Math.random()).slice(0, 2);
             return { comment: comment, workout: exercises };
         } else {
@@ -133,11 +140,11 @@ export default function useWorkoutState() {
             // await the possible fetchExercises since it can contain an unhandles promise
             try {
                 const result = await fetchExercises(null, equipment, exerciseCatagories);
-                // Use sorting algo to shuffle the array, use slice with a base from 0 to maximum 8 to get max 8 exercises
+                // Use sorting algo to shuffle the array, use slice with a base from index 0 to 8 to get max 8 exercises
                 const exercises = result.sort(() => .5 - Math.random()).slice(0, 8)
                 return comment ? { comment: comment, workout: exercises } : { workout: exercises };;
             } catch (e) {
-                //catch and return error
+                //catch the Error thrown and return error
                 return { error: e };
             }
         }
@@ -157,7 +164,6 @@ export default function useWorkoutState() {
                 // remove item if it already exists so we can set a new one
                 localStorage.removeItem(workoutKey);
             }
-            console.log(advice.workout);
             const workoutData = { 'workout': advice.workout, 'comment': advice.comment };
             localStorage.setItem(workoutKey, JSON.stringify(workoutData));
         }

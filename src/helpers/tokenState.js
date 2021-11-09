@@ -14,6 +14,6 @@ export default function tokenState(jwtToken) {
     const expirationTimeStamp = decodedToken.exp;
     // Get the current time in unix format just like the token timestamp 
     const currentTimeStamp = Math.floor(new Date().getTime() / 1000);
-    
+
     return (expirationTimeStamp - currentTimeStamp) > 0
 }

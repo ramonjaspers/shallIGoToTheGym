@@ -13,6 +13,11 @@ export default function Advice({ goal }) {
     return goals.indexOf(goal) > -1;
   }
 
+  /**
+   *  Gets advice string based on the given goal
+   * @param {string} goal 
+   * @returns {string} advice
+   */
   const getAdviceText = (goal) => {
     switch (goal) {
       case 'weightloss':
@@ -36,4 +41,3 @@ export default function Advice({ goal }) {
     </div>
   );
 }
-

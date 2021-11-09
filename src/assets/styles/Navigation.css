@@ -34,7 +34,8 @@
   margin-right: 3vw;
   display: block;
 }
-.navigation li a:hover, #dropdownButton:hover {
+.navigation li a:hover,
+#dropdownButton:hover {
   color: #f2c300;
 }
 
@@ -78,18 +79,17 @@
   display: block;
 }
 
-
- @media screen and (max-width: 750px) {
+@media screen and (max-width: 750px) {
   #naviagtionItems {
     padding: 0;
     height: auto;
     display: block;
     position: relative;
-  } 
-  .navigationUrl a{
+  }
+  .navigationUrl a {
     padding-top: 15px;
   }
-  #dropdownButton{
+  #dropdownButton {
     padding-top: 15px;
     padding-bottom: 15px;
   }
@@ -98,4 +98,4 @@
     margin-bottom: 15px;
     margin-top: 0px;
   }
- } 
+}

@@ -23,7 +23,7 @@ export default function Login() {
   const signIn = async (data) => {
     setIsLoading(true);
     // Post login data 
-    await axios.post(`https://polar-lake-14365.herokuapp.com/api/auth/signin`, {
+    axios.post(`https://polar-lake-14365.herokuapp.com/api/auth/signin`, {
       ...data
     }).then(({ data }) => {
       // On succesfull post try to login with the received accesstoken

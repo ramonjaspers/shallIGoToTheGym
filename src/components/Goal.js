@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 /**
- * Module for showing the goals
+ * Component for showing the goals
  * @param {string} user chosen goal
  * @returns 
  */

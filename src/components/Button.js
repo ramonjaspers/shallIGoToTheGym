@@ -5,9 +5,11 @@ import '../assets/styles/Button.css'
 export default function Button({ link, text, isDisabled }) {
     const history = useHistory();
 
-    const navigateTo = () => {
-        history.push(`/${link}`);
-    }
+    /**
+     * navigates to the given link
+     * @returns {void}
+     */
+    const navigateTo = () => history.push(`/${link}`);
 
     return (
         <button

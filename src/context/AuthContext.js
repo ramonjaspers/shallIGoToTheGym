@@ -1,7 +1,7 @@
 // Import react module and components
 import React, { createContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 // import helpers
 import tokenState from '../helpers/tokenState.js';
@@ -10,6 +10,7 @@ import tokenState from '../helpers/tokenState.js';
  * Serves a context which holds the context data in the app so it can be accessed wherever
  */
 export const AuthContext = createContext({});
+
 /**
  * 
  * Authentication logic for the app 
@@ -67,6 +68,7 @@ export default function AuthContextProvider({ children }) {
     }
 
     /**
+     * 
      * Fetches the user data from the external NOVI heorku API
      * @param {string} JWT JSON Web Token
      * @throws {Error} optionally throws an error

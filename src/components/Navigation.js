@@ -3,9 +3,13 @@ import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../assets/styles/Navigation.css';
 
+/**
+ * Renders the navigation bar
+ * @returns {render}
+ */
 export default function Navigation() {
   const { user } = useContext(AuthContext);
-  console.log(user);
+
   return (
     <div className='row navigation'>
       <ul id='naviagtionItems'>
