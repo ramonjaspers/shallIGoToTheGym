@@ -1,7 +1,5 @@
 // Import react module and components
-import { useContext } from 'react';
 import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
 
 /**
  * 
@@ -9,8 +7,6 @@ import { AuthContext } from '../context/AuthContext';
  * @returns void
  */
 export default function useWorkoutState() {
-    const { user } = useContext(AuthContext);
-
     /**
      * Fetches exercises from given params and/or the external API
      * @param {*} muscleId 
@@ -21,9 +17,9 @@ export default function useWorkoutState() {
      */
     const fetchExercises = async (muscleId, equipment, exerciseCatagories, withImages = false) => {
         try {
-            // create a URLSearchParam object so its possible to pass multiple the same keys with different values
+            // create a URLSearchParam object so we can pass multiple the same keys with different values
             const apiParams = new URLSearchParams();
-            apiParams.append("language", 2); // 2 = english, default is german
+            apiParams.append("language", 2); // 2 = english, default = german
             apiParams.append("limit", 50); // default is 20
             muscleId && apiParams.append("muscles", muscleId);
             equipment && apiParams.append("equipment", equipment);
@@ -151,16 +147,17 @@ export default function useWorkoutState() {
      * Stores the workout in the localStorage for later usage
      * @param {{comment, workout}} data 
      */
-    const storeWorkout = (advice) => {
-        if (user && user.id) {
+    const storeWorkout = (advice, userId) => {
+        if (userId) {
             // set the workout in the localStorage for user usage
-            const workoutKey = 'workout' + user.id;
+            const workoutKey = 'workout' + userId;
             const storedWorkout = localStorage.getItem(workoutKey);
 
             if (storedWorkout) {
                 // remove item if it already exists so we can set a new one
                 localStorage.removeItem(workoutKey);
             }
+            console.log(advice.workout);
             const workoutData = { 'workout': advice.workout, 'comment': advice.comment };
             localStorage.setItem(workoutKey, JSON.stringify(workoutData));
         }

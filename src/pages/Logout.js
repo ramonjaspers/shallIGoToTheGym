@@ -1,4 +1,5 @@
-import { useContext, useEffect } from 'react';
+import Loader from 'react-loader-spinner';
+import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
 /**
@@ -8,8 +9,18 @@ import { AuthContext } from '../context/AuthContext';
 export default function Logout() {
   const { logout } = useContext(AuthContext);
 
-  useEffect(() => {
+  setTimeout(() => {
+    // add 3 sec delay because of fancyness. We want to see a loader :D
     logout();
-  }, []);
+  }, 3000);
+
+  return (
+    <div className='content'>
+      <div className='container'>
+        <h6> Logging you out... </h6>
+        <Loader type="TailSpin" color="#00BFFF" height={'10vw'} width={'10vw'} />
+      </div>
+    </div>
+  );
 }
 

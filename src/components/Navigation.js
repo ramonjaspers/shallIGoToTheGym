@@ -24,10 +24,10 @@ export default function Navigation() {
         {user ?
           <li className='navigationUrl'>
             <div id='dropdown'>
-              <button id='dropdownButton'><a>{user.username}</a></button>
-              <div className='dropdownContent'>
-                <NavLink className='dropdownItem' to='/profile'>Profile</NavLink>
-                <NavLink className='dropdownItem' to='/login'>Login</NavLink>
+              <p id='dropdownButton'>{user.username} 👤</p>
+              <div id='dropdownContent'>
+                <NavLink className='dropdownItem' to='/profile'>Profile 💪</NavLink>
+                <NavLink className='dropdownItem' to='/logout'>Logout 🚪</NavLink>
               </div>
             </div>
           </li>

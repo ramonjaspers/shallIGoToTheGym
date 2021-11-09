@@ -13,13 +13,13 @@
 }
 
 .appLogo {
-  font-size: 4vw;
+  font-size: 3em;
   font-family: "WaitingfortheSunrise", serif;
   margin-right: auto;
 }
 
 .navigationUrl {
-  font-size: 1.5vw;
+  font-size: 1.5em;
   font-weight: bold;
   align-self: center;
 }
@@ -34,42 +34,68 @@
   margin-right: 3vw;
   display: block;
 }
-.navigation li a:hover {
+.navigation li a:hover, #dropdownButton:hover {
   color: #f2c300;
 }
 
 /* Dropdown Button */
 #dropdownButton {
   border: none;
-  padding: 16px;
+  padding: 0 40px;
+  margin: 0;
 }
 
 /* The container <div> - needed to position the dropdown content */
 #dropdown {
   position: relative;
   display: inline-block;
+  text-align: none;
+  width: 100%;
 }
 
 /* Dropdown Content (Hidden by Default) */
-.dropdownContent {
+#dropdownContent {
   display: none;
   position: absolute;
+  width: 100%;
   background-color: #010567;
-  min-width: 160px;
   z-index: 1;
 }
 
-/* Links inside the dropdown */
-.dropdownContent .dropdownItem {
-  padding: 12px 16px;
+/* Spacing inside dropdown */
+#dropdownContent .dropdownItem {
+  margin: 12px 16px;
   display: block;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content #dropdownItem:hover {opacity: 0.6;}
+/* Change color of dropdown blocks on hover */
+#dropdownContent #dropdownItem:hover {
+  opacity: 0.6;
+}
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdownContent {display: block;}
+/* Show the dropdown contents on hover */
+#dropdown:hover #dropdownContent {
+  display: block;
+}
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropdownButton {opacity: 0.6;}
+
+ @media screen and (max-width: 750px) {
+  #naviagtionItems {
+    padding: 0;
+    height: auto;
+    display: block;
+    position: relative;
+  } 
+  .navigationUrl a{
+    padding-top: 15px;
+  }
+  #dropdownButton{
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  #dropdownContent .dropdownItem {
+    margin-bottom: 15px;
+    margin-top: 0px;
+  }
+ } 

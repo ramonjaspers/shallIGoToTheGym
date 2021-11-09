@@ -101,8 +101,6 @@ export default function useQuestionState() {
      * @returns {object|void} workout
      */
     const handleAnswer = async (answer) => {
-        console.log(answer);
-        console.log(equipment);
         const nextQuestionScore = currentQuestion.questionScore + answer.points;
         // Set the newest data or keep the old
         const currentComment = answer.comment ?? comment ?? '';

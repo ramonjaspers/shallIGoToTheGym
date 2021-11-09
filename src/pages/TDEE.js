@@ -42,6 +42,7 @@ export default function TDEE() {
     };
 
     return (
+        // Overwrite the default background
         <div className='content' style={{ backgroundImage: `url(${weightlossBG})` }}>
             <div className='container'>
                 <div className='backButton' onClick={() => navigateBack()}>&#8592; </div>
@@ -58,25 +59,27 @@ export default function TDEE() {
                                 to understand what makes up your Total Energy Expenditure (see below).
                             </p>
                             <form onSubmit={handleSubmit(calculateTdee)}>
-                                <label>Gender</label>
-                                <span>Male</span>
-                                <input {...register("Gender", { required: 'A gender is required' })} type="radio" value="Male" />
-                                <span>Female</span>
-                                <input {...register("Gender", { required: 'A gender is required' })} type="radio" value="Female" /><br />
+                                <div id='genderChoice'>
+                                    <label>Gender: </label>
+                                    <span>Male</span>
+                                    <input {...register("Gender", { required: 'A gender is required' })} type="radio" value="Male" />
+                                    <span>Female</span>
+                                    <input {...register("Gender", { required: 'A gender is required' })} type="radio" value="Female" />
+                                </div><br />
                                 {errors.Gender && <span className="errMssg">{errors.Gender.message}</span>} <br />
-                                <label>Age</label>
+                                <label>Age:</label>
                                 <input type="number" placeholder="24" {...register("Age", {
                                     required: 'Age is required',
                                     maxLength: { value: 3, message: 'Invalid age given' }
                                 })} /><br />
                                 {errors.Age && <span className="errMssg">{errors.Age.message}</span>} <br />
-                                <label>Weigth</label>
+                                <label>Weigth:</label>
                                 <input type="number" placeholder="73" {...register("Weight", {
                                     required: 'Weight is required',
                                     maxLength: { value: 3, message: 'Invalid weight given' }
                                 })} /><br />
                                 {errors.Weight && <span className="errMssg">{errors.Weight.message}</span>} <br />
-                                <label>Height (CM)</label>
+                                <label>Height (CM):</label>
                                 <input type="number" placeholder="183" {...register("Height", {
                                     required: 'Height is required',
                                     maxLength: { value: 3, message: 'Invalid height given' }

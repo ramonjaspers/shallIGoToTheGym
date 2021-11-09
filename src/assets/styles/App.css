@@ -42,6 +42,7 @@
   flex: auto;
   justify-content: center;
   align-items: center;
+  background-image: url("../images/defaultBG.jpeg");
 }
 
 .containerTitle {
@@ -59,6 +60,7 @@
 }
 
 .backButton {
+  position: absolute;
   font-size: 30px;
   font-weight: bold;
   margin: 25px 0 0 25px;
@@ -74,6 +76,10 @@
 .errMssg {
   font-weight: lighter;
   color: red;
+}
+.okMssg {
+  font-weight: lighter;
+  color: green;
 }
 
 /* general components */
@@ -178,8 +184,15 @@ select {
     width: 100%;
   }
   .containerContent {
-    padding-bottom: 0px;
+    padding-bottom: 15px;
     padding-left: 0px;
     padding-right: 0px;
+  }
+  .containerTitle {
+    padding-top: 15px;
+  }
+
+  .backButton{
+    position: inherit;
   }
 }

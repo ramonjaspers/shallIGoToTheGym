@@ -1,6 +1,8 @@
 label {
-  float: left;
-  font-weight: bold;
+  display: inline-block;
+  padding-top: 10px;
+  text-align: left;
+  width: 140px;
 }
 
 table {
@@ -22,9 +24,25 @@ td:last-child,
 th:last-child {
   border-right: none;
 }
+#genderChoice{
+  padding-right: 170px;
+}
 
-@media screen and (max-width: 750) {
-  th, td {
+@media screen and (max-width: 750px) {
+  th,
+  td {
     padding: 0 0 0 0;
+  }
+
+  label {
+    /* display: block; */
+    /* padding-top: 10px; */
+    width: auto;
+  }
+
+  #genderChoice{
+    padding-right: 0;
+    width: auto;
+
   }
 }

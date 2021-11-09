@@ -28,6 +28,7 @@ export default function Exercises() {
             }
         };
         fetchMuscles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [muscles]);
 
 
@@ -45,6 +46,7 @@ export default function Exercises() {
     }
 
     return (
+        // Overwrite the default background
         <div className='content' style={{ backgroundImage: `url(${exercisesBG})` }}>
             <div className='container'>
                 <div className='backButton' onClick={() => history.push('/')}>&#8592; </div>

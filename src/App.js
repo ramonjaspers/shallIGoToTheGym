@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Goals from './pages/Goals';
 import Login from './pages/Login';
+import Logout from './pages/Logout';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import TDEE from './pages/TDEE';
@@ -68,7 +69,7 @@ export default function App() {
                         <Profile />
                     </PrivateRoute>
                     <PrivateRoute exact path="/logout" authState={isAuth}>
-                        <Profile />
+                        <Logout />
                     </PrivateRoute>
                 </Switch>
             </>

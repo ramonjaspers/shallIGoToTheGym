@@ -5,8 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Loader from 'react-loader-spinner';
-// import background image
-import defaultBG from '../assets/images/defaultBG.jpeg';
 
 export default function SignUp() {
   // init hooks
@@ -48,7 +46,7 @@ export default function SignUp() {
   }
 
   return (
-    <div className='content' style={{ backgroundImage: `url(${defaultBG})` }}>
+    <div className='content'>
       <div className='container'>
         <div className='backButton' onClick={() => history.push('/login')}>&#8592;</div>
         <div className="containerTitle"><h4>Register</h4></div>

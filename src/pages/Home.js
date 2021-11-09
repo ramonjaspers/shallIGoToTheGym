@@ -2,7 +2,7 @@
 import React from 'react';
 // import components
 import Tile from '../components/Tile';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 
 // Import assets
@@ -13,7 +13,6 @@ import calories from '../assets/images/defaultBG.jpeg';
 import exercises from '../assets/images/exercises.jpeg';
 
 export default function Home() {
-    const history = useHistory();
 
     return (
         <>
@@ -59,10 +58,10 @@ export default function Home() {
             <div id='subText'>
                 <div className='textColumn'>
                     <h3>Tools</h3>
-                    <Link to='/Quiz'>Shall i go to the gym?!</Link><br/><br/>
-                    <Link to='/Goals'>Goal advice</Link><br/><br/>
-                    <Link to='/tdee'>TDEE calculator</Link><br/><br/>
-                    <Link to='/exercises'>Exercise searcher</Link><br/><br/>
+                    <Link to='/Quiz'>Shall i go to the gym?!</Link><br /><br />
+                    <Link to='/Goals'>Goal advice</Link><br /><br />
+                    <Link to='/tdee'>TDEE calculator</Link><br /><br />
+                    <Link to='/exercises'>Exercise searcher</Link><br /><br />
                 </div>
                 <div className='textColumn'>
                     <h3>About us</h3>

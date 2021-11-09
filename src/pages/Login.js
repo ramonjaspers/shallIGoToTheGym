@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import useWorkoutState from '../helpers/WorkoutHelper';
 import Loader from 'react-loader-spinner';
-// background image
-import defaultBG from '../assets/images/defaultBG.jpeg';
 
 export default function Login() {
   // Init hooks
@@ -28,10 +27,15 @@ export default function Login() {
       ...data
     }).then(({ data }) => {
       // On succesfull post try to login with the received accesstoken
-      login(data.accessToken);
+      // insert JWT into local storage, fetch user data and set auth = true
+      localStorage.setItem('token', data.accessToken);
+      // Get user data from JWT token
+      const userData = jwtDecode(data.accessToken);
+      // set IsAuth login state
+      login(userData);
       if (history.location.state && history.location.state.workout) {
         // if the workout state is set we want to set this
-        storeWorkout(history.location.state.workout);
+        storeWorkout(history.location.state, data.id);
       }
       //remove loader and redirect
       setIsLoading(false);
@@ -47,7 +51,7 @@ export default function Login() {
   };
 
   return (
-    <div className='content' style={{ backgroundImage: `url(${defaultBG})` }}>
+    <div className='content'>
       <div className='container'>
         <div className='backButton' onClick={() => history.push('/')}>&#8592;</div>
         <div className="containerTitle"><h4>Login</h4></div>

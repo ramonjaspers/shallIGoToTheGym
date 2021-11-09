@@ -5,11 +5,10 @@ import useQuestionState from '../helpers/QuestionState';
 import useWorkoutState from '../helpers/WorkoutHelper';
 import Exercise from '../components/Exercise';
 import { useHistory } from 'react-router';
+import Loader from 'react-loader-spinner';
+import { AuthContext } from '../context/AuthContext';
 // style import
 import '../assets/styles/Quiz.css'
-// image import
-import defaultBG from '../assets/images/defaultBG.jpeg';
-import Loader from 'react-loader-spinner';
 
 export default function Quiz() {
   const {
@@ -20,18 +19,18 @@ export default function Quiz() {
     handleAnswer,
   } = useQuestionState();
   const { generateWorkoutAdvice, storeWorkout } = useWorkoutState();
+  const { user } = useContext(AuthContext)
   const [workout, setWorkout] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [userNotice, setUserNotice] = useState('');
   const history = useHistory();
-
 
   useEffect(() => {
     if (!currentQuestion.answerOptions.length > 0) {
       const initialQuestion = getQuestion(currentQuestion.questionScore);
       setCurrentQuestion(initialQuestion);
     }
-  }, [currentQuestion]);
+  });
 
 
   const onclickHandler = async (userInput) => {
@@ -48,16 +47,19 @@ export default function Quiz() {
         // if and error is set we should show this to the user
         setUserNotice("Something went wrong fetching the exercises, try again later!");
       } else {
-        // if all is ok we would like to store the data
+        // Set the workout to be shown
         setWorkout({ 'exercises': advice.workout, 'comment': advice.comment });
-        storeWorkout(advice);
+        if (user) {
+          // if a user is set we also want to store the workout for later use
+          storeWorkout(advice, user.id);
+        }
       }
       setIsProcessing(false);
     }
   };
 
   return (
-    <div className='content' style={{ backgroundImage: `url(${defaultBG})` }}>
+    <div className='content'>
       <div className='container'>
         <div className='backButton' onClick={() => history.push('/')}>&#8592;</div>
         <div className='containerContent'>
@@ -83,10 +85,14 @@ export default function Quiz() {
                       {/* workout is set and there is no user notice, show the advice */}
                       <h2>Result</h2>
                       {workout.comment && <h4>{workout.comment}</h4>}
-                      <p>You are currently nog logged in, this means your workout will not be saved to your profile. Login anyways and store your workout to your profile?</p>
-                      {/* Pushing to the histrory with LocationDescriptorObject for state binding */}
-                      <button className='defaultButton' onClick={() => { history.push({ pathname: '/login', state: { workout } }) }}>Login</button>
-
+                      {!user &&
+                        <>
+                          {/* User is not set, show login option */}
+                          <p>You are currently nog logged in, this means your workout will not be saved to your profile. Login anyways and store your workout to your profile?</p>
+                          {/* Pushing to the histrory with LocationDescriptorObject for state binding */}
+                          <button className='defaultButton' onClick={() => { history.push({ pathname: '/login', state: { workout } }) }}>Login</button>
+                        </>
+                      }
                       <p><b>Not happy with the result?</b></p>
                       {/** 
                         *history.go() forces a redirect to the last set history value. 
