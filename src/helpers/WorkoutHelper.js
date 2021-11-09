@@ -1,5 +1,7 @@
 // Import react module and components
+import { useContext } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
 
 /**
  * 
@@ -7,13 +9,15 @@ import axios from 'axios';
  * @returns void
  */
 export default function useWorkoutState() {
+    const { user } = useContext(AuthContext);
+
     /**
      * Fetches exercises from given params and/or the external API
      * @param {*} muscleId 
      * @param {*} equipment 
      * @param {*} exerciseCatagories 
      * @param {*} withImages 
-     * @returns {array|promise} exercises
+     * @returns {array|promise|string} Returns array of exercises of error string
      */
     const fetchExercises = async (muscleId, equipment, exerciseCatagories, withImages = false) => {
         try {
@@ -49,16 +53,15 @@ export default function useWorkoutState() {
             // after the promises are resolved return the exercises with images
             return exercisesWithImage;
         } catch (e) {
-            // if something goes wrong do nothing
-            console.log(e);
-            return [];
+            // if something goes throw error
+            throw new Error('Failed to get the excercises from the external api');
         }
     }
 
     /**
      * 
      * @param {int|null} muscleId 
-     * @returns {array}
+     * @returns {array|promise}
      */
     const fetchExerciseMuscles = async (muscleId) => {
         return axios.get(`https://wger.de/api/v2/muscle/${muscleId ?? ''}/?language=2`, {
@@ -68,9 +71,8 @@ export default function useWorkoutState() {
         }).then(({ data }) => {
             return muscleId ? data : data.results;
         }).catch((e) => {
-            // if something goes wrong throw an error
-            console.log(e);
-            throw new Error('Fetching the muscles failed.');
+            // if something goes throw error
+            throw new Error('Failed to get the muscles from the external api');
         });
     }
 
@@ -133,10 +135,34 @@ export default function useWorkoutState() {
         } else {
             const exerciseCatagories = getExerciseCatagories(exerciseCatagory);
             // await the possible fetchExercises since it can contain an unhandles promise
-            const exerciseList = await fetchExercises(null, equipment, exerciseCatagories);
-            // Use sorting algo to shuffle the array, use slice with a base from 0 to maximum 8 to get max 8 exercises
-            const exercises = exerciseList.sort(() => .5 - Math.random()).slice(0, 8)
-            return comment ? { comment: comment, workout: exercises } : { workout: exercises };;
+            try {
+                const result = await fetchExercises(null, equipment, exerciseCatagories);
+                // Use sorting algo to shuffle the array, use slice with a base from 0 to maximum 8 to get max 8 exercises
+                const exercises = result.sort(() => .5 - Math.random()).slice(0, 8)
+                return comment ? { comment: comment, workout: exercises } : { workout: exercises };;
+            } catch (e) {
+                //catch and return error
+                return { error: e };
+            }
+        }
+    }
+
+    /**
+     * Stores the workout in the localStorage for later usage
+     * @param {{comment, workout}} data 
+     */
+    const storeWorkout = (advice) => {
+        if (user && user.id) {
+            // set the workout in the localStorage for user usage
+            const workoutKey = 'workout' + user.id;
+            const storedWorkout = localStorage.getItem(workoutKey);
+
+            if (storedWorkout) {
+                // remove item if it already exists so we can set a new one
+                localStorage.removeItem(workoutKey);
+            }
+            const workoutData = { 'workout': advice.workout, 'comment': advice.comment };
+            localStorage.setItem(workoutKey, JSON.stringify(workoutData));
         }
     }
 
@@ -145,5 +171,6 @@ export default function useWorkoutState() {
         fetchExerciseImg,
         fetchExerciseMuscles,
         generateWorkoutAdvice,
+        storeWorkout,
     }
 }

@@ -126,22 +126,12 @@ export default function useQuestionState() {
         return {};
     }
 
-    /**
-     * Call to clear the question data since we do not want to alter the state out of this stateHandler
-     */
-    const clearQuestionData = () => {
-        setComment('');
-        setEquipment(null);
-        setWorkoutType(null);
-    }
-
     // return the props we want to use in external files 
     return {
         currentQuestion,
         questions,
         getQuestion,
         setCurrentQuestion,
-        clearQuestionData,
         handleAnswer,
     }
 };

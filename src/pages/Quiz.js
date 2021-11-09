@@ -5,7 +5,6 @@ import useQuestionState from '../helpers/QuestionState';
 import useWorkoutState from '../helpers/WorkoutHelper';
 import Exercise from '../components/Exercise';
 import { useHistory } from 'react-router';
-import { AuthContext } from '../context/AuthContext';
 // style import
 import '../assets/styles/Quiz.css'
 // image import
@@ -17,14 +16,13 @@ export default function Quiz() {
     questions,
     currentQuestion,
     setCurrentQuestion,
-    clearQuestionData,
     getQuestion,
-    handleAnswer
+    handleAnswer,
   } = useQuestionState();
-  const { generateWorkoutAdvice } = useWorkoutState();
-  const { user } = useContext(AuthContext);
+  const { generateWorkoutAdvice, storeWorkout } = useWorkoutState();
   const [workout, setWorkout] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [userNotice, setUserNotice] = useState('');
   const history = useHistory();
 
 
@@ -33,25 +31,8 @@ export default function Quiz() {
       const initialQuestion = getQuestion(currentQuestion.questionScore);
       setCurrentQuestion(initialQuestion);
     }
-  }, [workout]);
+  }, [currentQuestion]);
 
-
-  /**
-   * 
-   * @param {{comment, workout}} data 
-   */
-  const storeWorkout = (advice) => {
-    if (user && user.id) {
-      // set the workout in the localStorage for user usage
-      const storedWorkout = localStorage.getItem('workout' + user.id);
-      if (storedWorkout) {
-        localStorage.removeItem('workout' + user.id);
-      }
-      localStorage.setItem('workout' + user.id, { 'workout': advice.workout, 'comment': advice.comment });
-    }
-    setWorkout({ 'exercises': advice.workout, 'comment': advice.comment });
-    setIsProcessing(false);
-  }
 
   const onclickHandler = async (userInput) => {
     // Handle the user input
@@ -62,9 +43,16 @@ export default function Quiz() {
     ) {
       setIsProcessing(true);
       // If we recieved an object with the props needed fetch workout advice
-      console.log(result.equipment);
       const advice = await generateWorkoutAdvice(result.catagory, result.equipment, result.comment);
-      storeWorkout(advice);
+      if (advice.error) {
+        // if and error is set we should show this to the user
+        setUserNotice("Something went wrong fetching the exercises, try again later!");
+      } else {
+        // if all is ok we would like to store the data
+        setWorkout({ 'exercises': advice.workout, 'comment': advice.comment });
+        storeWorkout(advice);
+      }
+      setIsProcessing(false);
     }
   };
 
@@ -75,36 +63,51 @@ export default function Quiz() {
         <div className='containerContent'>
           {isProcessing
             ? <>
-                <h6> Loading exercises... </h6>
-                <Loader type="TailSpin" color="#00BFFF" height={'10vw'} width={'10vw'} />
-              </>
+              <h6> Loading exercises... </h6>
+              <Loader type="TailSpin" color="#00BFFF" height={'10vw'} width={'10vw'} />
+            </>
             : <>
-              {!workout ?
+              {!userNotice ?
                 <>
-                  <h4>Progress {currentQuestion.questionScore / (questions.length) * 100}%</h4>
-                  <h5>{currentQuestion.questionText}</h5>
-                  {currentQuestion.answerOptions.map((option, key) => (
-                    <button className='questionAnswer' key={key} onClick={() => onclickHandler(option)}>{option.text}</button>
-                  ))}
+                  {!workout ?
+                    <>
+                      {/* no workout is set nor userNotice, we show the questions */}
+                      <h4>Progress {currentQuestion.questionScore / (questions.length) * 100}%</h4>
+                      <h5>{currentQuestion.questionText}</h5>
+                      {currentQuestion.answerOptions.map((option, key) => (
+                        <button className='questionAnswer' key={key} onClick={() => onclickHandler(option)}>{option.text}</button>
+                      ))}
+                    </>
+                    :
+                    <>
+                      {/* workout is set and there is no user notice, show the advice */}
+                      <h2>Result</h2>
+                      {workout.comment && <h4>{workout.comment}</h4>}
+                      <p>You are currently nog logged in, this means your workout will not be saved to your profile. Login anyways and store your workout to your profile?</p>
+                      {/* Pushing to the histrory with LocationDescriptorObject for state binding */}
+                      <button className='defaultButton' onClick={() => { history.push({ pathname: '/login', state: { workout } }) }}>Login</button>
+
+                      <p><b>Not happy with the result?</b></p>
+                      {/** 
+                        *history.go() forces a redirect to the last set history value. 
+                        *On redirect we also lose the states which we want to start over.
+                        **/}
+                      <button className='defaultButton' onClick={() => history.go()}>Try again</button>
+                      {workout.exercises && workout.exercises.length > 0 &&
+                        <>
+                          <h5>Give the following exercises a try</h5>
+                          {workout.exercises.map(exercise =>
+                            <Exercise key={exercise.id} exercise={exercise} />
+                          )}
+                        </>
+                      }
+                    </>
+                  }
                 </>
                 :
                 <>
-                  <h2>Result</h2>
-                  {workout.comment && <h4>{workout.comment}</h4>}
-                  <p>Not happy with the result?</p>
-                  {/** 
-               *history.go() foreces a refresh on the last set history value. 
-               *On refresh we also lose the states which we want to start over.
-               **/}
-                  <button onClick={() => history.go()}>Try again</button>
-                  {workout.exercises && workout.exercises.length > 0 &&
-                    <>
-                      <h5>Give the following exercises a try</h5>
-                      {workout.exercises.map(exercise =>
-                        <Exercise key={exercise.id} exercise={exercise} />
-                      )}
-                    </>
-                  }
+                  {/* userNotice is set, show the message */}
+                  <h6 className='errMssg'>{userNotice}</h6>
                 </>
               }
             </>

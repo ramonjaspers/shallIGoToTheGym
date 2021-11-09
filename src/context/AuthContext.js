@@ -32,10 +32,16 @@ export default function AuthContextProvider({ children }) {
         // Fetch token from localStorage
         const token = localStorage.getItem('token');
 
-        if (token && tokenState(token)) {
-            fetchUserData(token);
+        if (token) {
+            if (tokenState(token)) {
+                // Fetch the user data since token is set and valid
+                fetchUserData(token);
+            } else {
+                // Logout since token is not valid
+                logout();
+            }
         } else {
-            // Set default values
+            // Set default values since there is no token
             toggleIsAuth({ ...isAuth, status: 'done' });
         }
     }, []);
@@ -51,8 +57,6 @@ export default function AuthContextProvider({ children }) {
         //set user data
         const token = jwtDecode(JWT);
         toggleIsAuth({ user: { id: token.sub }, isAuth: true, status: 'done' });
-        // goto profile page
-        history.push('/profile');
     }
 
     /**
@@ -69,7 +73,7 @@ export default function AuthContextProvider({ children }) {
 
     const fetchUserData = async (JWT) => {
         // Fetch the user data with the given token
-        axios.get(`https://polar-lake-14365.herokuapp.com/api/user`, {
+        await axios.get(`https://polar-lake-14365.herokuapp.com/api/user`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${JWT}`,

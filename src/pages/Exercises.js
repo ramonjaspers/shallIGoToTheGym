@@ -24,7 +24,7 @@ export default function Exercises() {
                 const result = await fetchExerciseMuscles();
                 setMuscles(result);
             } catch (e) {
-                setError(e);
+                setError(e.message);
             }
         };
         fetchMuscles();

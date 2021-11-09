@@ -44,7 +44,7 @@ export default function Profile() {
           <p><strong>Email: </strong>{user.email}</p>
         </section>
         <section>
-          {exercises && exercises.length > 0 ?
+          {/* {exercises && exercises.length > 0 ?
             <>
               <p>To search for the exercise, just click on the exercise of choice.</p>
               {exercises.map(exercise =>
@@ -52,7 +52,7 @@ export default function Profile() {
               )}
             </>
             : <h5>No workout is saved.</h5>
-          }
+          } */}
           <p><strong>Workout: </strong>{user.email}</p>
         </section>
         <p>Terug naar de <Link to="/">Homepagina</Link></p>

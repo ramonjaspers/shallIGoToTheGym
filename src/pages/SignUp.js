@@ -33,16 +33,16 @@ export default function SignUp() {
         history.push('/login');
       }).catch((e) => {
         setIsLoading(false);
-        // Show user error and show real error in console
+        // Show user error
         setError("api", {
           type: "manual",
-          message: "Invalid user or user already exists",
+          message: e.message ?? "Invalid user or user already exists",
         });
       });
     } else {
       setError("repeatedPassword", {
         type: "manual",
-        message: "Passwords do not match.",
+        message: "Passwords do not match",
       });
     }
   }
@@ -50,24 +50,24 @@ export default function SignUp() {
   return (
     <div className='content' style={{ backgroundImage: `url(${defaultBG})` }}>
       <div className='container'>
-
-        <h4 className='containerTitle'>Registreren</h4>
-        {isLoading ?
-          <Loader type="TailSpin" color="#00BFFF" height={150} width={150} />
-          :
-          <form onSubmit={handleSubmit(createUser)}>
-            <input type="email" placeholder="email" {...register("email", { required: true, maxLength: 80 })} /> <br />
-            {errors.email && <p className='errMssg'>{errors.email.message}</p>}
-            <input type="text" placeholder="username" {...register("username", {})} /><br />
-            {errors.username && <p className='errMssg'>{errors.username.message}</p>}
-            <input type="password" placeholder="password" {...register("password", { required: true, maxLength: 100 })} /><br />
-            {errors.password && <p className='errMssg'>{errors.password.message}</p>}
-            <input type="password" placeholder="Repeat password" {...register("repeatedPassword", { required: true, maxLength: 100 })} /><br />
-            {errors.repeatedPassword && <p className='errMssg'>{errors.repeatedPassword.message}</p>}
-            <input className='defaultButton' type="submit" onClick={() => clearErrors('api')} /><br />
-            {errors.api && <p className='errMssg'>{errors.api.message}</p>}
-          </form>
-        }
+        <div className='backButton' onClick={() => history.push('/login')}>&#8592;</div>
+        <div className="containerTitle"><h4>Register</h4></div>
+        <form onSubmit={handleSubmit(createUser)}>
+          <input type="email" placeholder="email" {...register("email", { required: true, maxLength: 80 })} /> <br />
+          {errors.email && <p className='errMssg'>{errors.email.message}</p>}
+          <input type="text" placeholder="username" {...register("username", {})} /><br />
+          {errors.username && <p className='errMssg'>{errors.username.message}</p>}
+          <input type="password" placeholder="password" {...register("password", { required: true, maxLength: 100 })} /><br />
+          {errors.password && <p className='errMssg'>{errors.password.message}</p>}
+          <input type="password" placeholder="Repeat password" {...register("repeatedPassword", { required: true, maxLength: 100 })} /><br />
+          {errors.repeatedPassword && <p className='errMssg'>{errors.repeatedPassword.message}</p>}
+          {!isLoading
+            ? <input className='defaultButton' type="submit" onClick={() => clearErrors('api')} />
+            : <Loader type="TailSpin" color="#00BFFF" height={150} width={150} />
+          }
+          <br />
+          {errors.api && <p className='errMssg'>{errors.api.message}</p>}
+        </form>
       </div>
     </div>
   );
