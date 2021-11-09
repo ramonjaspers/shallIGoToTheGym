@@ -5,7 +5,7 @@ export default function Advice({ goal }) {
 
   /**
    * Checks if the given goal is valid
-   * @param {*} goal 
+   * @param {string} goal 
    * @returns bool
    */
   const isValidGoal = (goal) => {

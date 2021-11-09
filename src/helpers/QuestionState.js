@@ -97,16 +97,16 @@ export default function useQuestionState() {
 
     /**
      * Sets possble states and set the next question based on the given answer
-     * @param {*} answer 
+     * @param {{points, comment, workoutType, equipment}} answer 
      * @returns {object|void} workout
      */
     const handleAnswer = async (answer) => {
         const nextQuestionScore = currentQuestion.questionScore + answer.points;
         // Set the newest data or keep the old
-        const currentComment = answer.comment ?? comment ?? '';
-        const currentWorkoutType = answer.workoutType ?? workoutType ?? '';
-        const currentEquipment = answer.equipment ?? equipment ?? '';
-        // Preserve data
+        const currentComment = answer.comment ?? comment;
+        const currentWorkoutType = answer.workoutType ?? workoutType;
+        const currentEquipment = answer.equipment ?? equipment;
+        // Preserve the latest set data
         setComment(currentComment);
         setWorkoutType(currentWorkoutType);
         setEquipment(currentEquipment);

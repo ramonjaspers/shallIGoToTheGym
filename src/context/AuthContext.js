@@ -14,7 +14,7 @@ export const AuthContext = createContext({});
 /**
  * 
  * Authentication logic for the app 
- * @param {*} children 
+ * @param {object} children 
  * @returns {AuthContext.Provider} AuthContext app wrapper
  */
 export default function AuthContextProvider({ children }) {

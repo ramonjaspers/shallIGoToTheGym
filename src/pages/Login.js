@@ -18,7 +18,7 @@ export default function Login() {
 
   /**
    * Login functionality
-   * @param {*} data 
+   * @param {object} data html field values aliased by name
    */
   const signIn = async (data) => {
     setIsLoading(true);

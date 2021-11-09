@@ -104,7 +104,7 @@ export default function useWorkoutState() {
      * catagory 2 = Lower body
      * catagory 3 = Lower body
      * source for integers used: wger.de/api/v2/exercisecategory
-     * @param {*} catagory 
+     * @param {int} catagory 
      * @returns {array} Catagory integers
      */
     const getExerciseCatagories = (catagory) => {

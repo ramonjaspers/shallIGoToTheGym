@@ -19,7 +19,7 @@ export default function TDEE() {
 
     /**
      * Generates the TDEE
-     * @param {*} formData 
+     * @param {object} formData html field values aliased by name
      */
     const calculateTdee = (formData) => {
         // Harris-Benedict formula, w/95% confidence range

@@ -14,7 +14,7 @@ export default function SignUp() {
 
   /**
    * Tries to create a user
-   * @param {*} data 
+   * @param {object} data html field values aliased by name
    */
   const createUser = async (data) => {
     if (data.password === data.repeatedPassword) {
