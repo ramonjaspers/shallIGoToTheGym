@@ -96,7 +96,7 @@ export default function Quiz() {
                       {!user &&
                         <>
                           {/* User is not set, show login option */}
-                          <p>You are currently nog logged in, this means your workout will not be saved to your profile. Login anyways and store your workout to your profile?</p>
+                          <p>You are currently not logged in, this means your workout will not be saved to your profile. Login anyways and store your workout to your profile?</p>
                           {/* Pushing to the histrory with LocationDescriptorObject for state binding */}
                           <button className='default-button' onClick={() => { history.push({ pathname: '/login', state: { exercises: workout.exercises } }) }}>Login</button>
                         </>
