@@ -74,11 +74,11 @@
 }
 
 .error-message {
-  font-weight: lighter;
+  font-weight: bold;
   color: red;
 }
 .success-message {
-  font-weight: lighter;
+  font-weight: bold;
   color: green;
 }
 

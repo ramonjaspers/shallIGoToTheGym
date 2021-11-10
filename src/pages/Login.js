@@ -58,6 +58,7 @@ export default function Login() {
         {!isAuth
           ?
           <form onSubmit={handleSubmit(signIn)}>
+          {history.location.state && history.location.state.signUp && <p className='success-message'>{history.location.state.signUp}</p>}
             <input type="text" placeholder="username" {...register("username", {
               required: 'Username is required.',
               maxLength: { value: 80, message: 'Invalid username given.' }

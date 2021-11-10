@@ -27,8 +27,7 @@ export default function SignUp() {
       }).then((data) => {
         // Stop loader, inform user and redirect to login
         setIsLoading(false);
-        alert('User created succesfully');
-        history.push('/login');
+        history.push('/login', {signUp: 'User created succesfully'});
       }).catch((e) => {
         setIsLoading(false);
         // Show user error
