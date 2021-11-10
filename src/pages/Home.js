@@ -9,7 +9,7 @@ import Button from '../components/Button';
 import '../assets/styles/Home.css';
 import defaultBG from '../assets/images/defaultBG.jpeg';
 import goals from '../assets/images/goals.jpeg';
-import calories from '../assets/images/defaultBG.jpeg';
+import calories from '../assets/images/calories.jpeg';
 import exercises from '../assets/images/exercises.jpeg';
 
 export default function Home() {
