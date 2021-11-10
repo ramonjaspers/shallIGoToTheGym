@@ -28,12 +28,13 @@ export default function Exercises() {
             }
         };
         fetchMuscles();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [muscles]);
 
 
     /**
      * 
+     * Fetches the exercises from the external API and sets this in the current state
      * @param {SyntheticBaseEvent} e or event is the full node with the whole dataobject in it 
      */
     const getExercises = async (e) => {

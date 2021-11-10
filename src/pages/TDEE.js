@@ -24,8 +24,8 @@ export default function TDEE() {
     const calculateTdee = (formData) => {
         // Harris-Benedict formula, w/95% confidence range
         const bmr = (10 * formData.Weight) + (6.25 * formData.Height) - (5 * formData.Age) + (formData.Gender === 'Male' ? +5 : -161);
-        // Activity Multiplier
         setBmr(bmr);
+        // set TDEE with the activity Multiplier
         setTdee(bmr * formData.Activity);
     };
 

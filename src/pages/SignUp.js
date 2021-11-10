@@ -25,7 +25,7 @@ export default function SignUp() {
         ...data,
         'role': ['user']
       }).then((data) => {
-        // Stop loader, inform user and redirect to login
+        // Stop loader, redirect to login with signUp state
         setIsLoading(false);
         history.push('/login', {signUp: 'User created succesfully'});
       }).catch((e) => {

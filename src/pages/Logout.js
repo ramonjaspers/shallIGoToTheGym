@@ -10,7 +10,7 @@ export default function Logout() {
   const { logout } = useContext(AuthContext);
 
   setTimeout(() => {
-    // add 3 sec delay because of fancyness. We want to see a loader :D
+    // add 3 sec delay because of fancyness. I want to see a loader :D
     logout();
   }, 3000);
 

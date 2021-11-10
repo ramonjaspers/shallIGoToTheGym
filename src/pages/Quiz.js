@@ -35,10 +35,11 @@ export default function Quiz() {
     }
   });
 
-/**
- * 
- * @param {*} userInput 
- */
+  /**
+   * 
+   * Handles the the onlick for a question
+   * @param {object} userInput html field values aliased by name
+   */
   const onclickHandler = async (userInput) => {
     // Handle the user input
     const result = await handleAnswer(userInput);
@@ -69,15 +70,15 @@ export default function Quiz() {
       <div className='container'>
         <div className='back-button' onClick={() => history.push('/')}>&#8592;</div>
         <div className='container-content'>
-          {isProcessing
-            ? <>
+          {isProcessing ?
+            <>
               <h6> Loading exercises... </h6>
               <Loader type="TailSpin" color="#00BFFF" height={'10vw'} width={'10vw'} />
             </>
             : <>
               {!userNotice ?
                 <>
-                {/* if workout comment is set or exercises show result */}
+                  {/* if workout comment is set or exercises show result */}
                   {!workout.comment && !workout.exercises ?
                     <>
                       {/* no workout is set nor userNotice, we show the questions */}
@@ -97,7 +98,7 @@ export default function Quiz() {
                           {/* User is not set, show login option */}
                           <p>You are currently nog logged in, this means your workout will not be saved to your profile. Login anyways and store your workout to your profile?</p>
                           {/* Pushing to the histrory with LocationDescriptorObject for state binding */}
-                          <button className='default-button' onClick={() => { history.push({ pathname: '/login', state: { exercises: workout.exercises} }) }}>Login</button>
+                          <button className='default-button' onClick={() => { history.push({ pathname: '/login', state: { exercises: workout.exercises } }) }}>Login</button>
                         </>
                       }
                       <p><b>Not happy with the result?</b></p>

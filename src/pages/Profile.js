@@ -113,9 +113,8 @@ export default function Profile() {
                     <>
                       {/* If we are updating show update form  */}
                       {isUpating &&
-
                         <form onSubmit={handleSubmit(setNewUserData)}>
-                        <h2>Update user</h2>
+                          <h2>Update user</h2>
                           <label>New email: </label>
                           <input type='email' name='email' {...register("email", {
                             required: 'Email is required.',
@@ -129,7 +128,6 @@ export default function Profile() {
                             minLength: { value: 6, message: 'Invalid password given.' }
                           })} /><br />
                           {errors.password && <p className='error-message'>{errors.password.message}</p>}
-
                           <label>Repeat password: </label>
                           <input type='password' name='repeatedPassword' minLength={6} {...register("repeatedPassword", {
                             required: 'Password is required.',
@@ -137,7 +135,6 @@ export default function Profile() {
                             minLength: { value: 6, message: 'Invalid password given.' }
                           })} /> <br />
                           {errors.repeatedPassword && <p className='error-message'>{errors.repeatedPassword.message}</p>}
-
                           <button type='button' className='cancel-button' onClick={(() => setIsUpdating(false))}>Cancel</button>
                           <button type='submit' className='default-button'>Save</button>
                         </form>
