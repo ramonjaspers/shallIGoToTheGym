@@ -1,13 +1,14 @@
 # Shall I go To The Gym information
 This is a project made by Ramon Japsers for his frontend module on NOVI University. 
 This app informs end users how to reach their desired fitness goals and a healthier lifstyle. It gives advice to go to the gym or not and can create a workout for the user to execute. 
-<!-- add image -->
+![Landing page](./src/assets/images/landingPage.png)
 ## Main functionalities:
 - Generating advice to go to the gym or not (based on questionnaire)
 - Giving a workout (based on questionnaire)
 - Calculating TDEE
 - Giving information about fitness goals
 - Exercise finder
+![Signup page](./src/assets/images/exercises.png)
 
 ## Install the application
 Open a terminal app of choice cointaining a NPM installation. If you do not have NPM installed follow the NPM installation manual https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
@@ -37,9 +38,9 @@ In order to access the user profile an account needs to be created. This can be 
 * Username: BuffHuman
 * Email: example: buffhuman@strong.com
 * Password: example: strongerThanUrM0m
-<!-- image of signup -->
+![Signup page](./src/assets/images/signUp.png)
 ## Sign In
 After registering the user will be transferred to the login page `http://localhost:3000/login`. On this page you can now log in with your given username and password e.g.
 * Username: example: BuffHuman
 * Password: example: strongerThanUrM0m
-<!-- image of login -->
+![Login page](./src/assets/images/signIn.png)

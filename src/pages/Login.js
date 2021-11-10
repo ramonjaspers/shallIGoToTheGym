@@ -34,7 +34,7 @@ export default function Login() {
       // set IsAuth login state
       login(userData);
       if (history.location.state && history.location.state.exercises ) {
-        // if the workout state is set we want to set this
+        // if exercises are set in the current location state we want to store these for the logged in user.
         storeWorkout(history.location.state.exercises, data.id);
       }
       //remove loader and redirect
@@ -82,4 +82,3 @@ export default function Login() {
     </div>
   );
 }
-
