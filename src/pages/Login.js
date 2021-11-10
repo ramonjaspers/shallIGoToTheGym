@@ -33,9 +33,10 @@ export default function Login() {
       const userData = jwtDecode(data.accessToken);
       // set IsAuth login state
       login(userData);
-      if (history.location.state && history.location.state.workout) {
+      if (history.location.state && history.location.state.exercises ) {
+        console.log(history.location.state);
         // if the workout state is set we want to set this
-        storeWorkout(history.location.state, data.id);
+        storeWorkout(history.location.state.exercises, data.id);
       }
       //remove loader and redirect
       setIsLoading(false);

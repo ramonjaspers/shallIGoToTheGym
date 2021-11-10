@@ -2,15 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import Exercise from '../components/Exercise';
 import Loader from 'react-loader-spinner';
+import { useForm } from 'react-hook-form';
 // import css
 import '../assets/styles/Profile.css'
 
 export default function Profile() {
   const { user, fetchUser, updateUser } = useContext(AuthContext);
+  const { handleSubmit } = useForm();
   const [exercises, setExercises] = useState([]);
   const [userNotice, setUserNotice] = useState({ type: null, message: null });
   const [isLoading, setIsLoading] = useState(false);
-  const [isUpating, setIsUpdating] = useState(null);
+  const [isUpating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     // if user isnt set fetch the user data one more time
@@ -26,6 +28,7 @@ export default function Profile() {
       // get the user workout from localstorage
       const workout = getUserSpecificWorkout('workout' + user.id);
       // store the exercises in the state
+      console.log(workout);
       setExercises(workout.exercises);
     }
     setIsLoading(false);
@@ -40,29 +43,30 @@ export default function Profile() {
   const getUserSpecificWorkout = (storageKey) => {
     const workoutString = localStorage.getItem(storageKey);
     if (workoutString) {
-      const { workout } = JSON.parse(workoutString);
+      const workout = JSON.parse(workoutString);
       // Set the user specified workout
       return workout;
     }
     return [];
   }
-
-  const setNewUserData = (event, field) => {
-    event.preventDefault();
+  const setNewUserData = async (data) => {
+    // show loader
+    setIsLoading(true);
     try {
-      if (field === 'password') {
-        if (event.target.pass.value === event.target.scndPass.value) {
-          updateUser(localStorage.getItem('token'), event.target.pass.value);
-        } else {
-          setUserNotice({ type: 'password', message: 'Passwords do not match' });
-        }
+      if (data.password === data.secondPassword) {
+        await updateUser(localStorage.getItem('token'), data.email, data.password);
+        setUserNotice({ type: 'success', message: `Data has been updated` });
+      } else {
+        setUserNotice({ type: 'password', message: 'Passwords do not match' });
       }
-      if (field === 'email') {
-        updateUser(localStorage.getItem('token'), event.target.email.value)
-      }
-      setUserNotice({ type: 'success', message: `${field} has been updated` });
+      // when done set loading to false and stop the updating section
+      setIsUpdating(null)
+      setIsLoading(false);
     } catch (e) {
-      setUserNotice({ type: 'failed', message: `${field} has not been updated, try again.` });
+      // on error set user message and turn off the loader
+      setUserNotice({ type: 'failed', message: `Data has not been updated, try again.` });
+      setIsUpdating(null)
+      setIsLoading(false);
     }
   }
 
@@ -81,30 +85,23 @@ export default function Profile() {
                       <h2>User info</h2>
                       <p><b>Username: </b>{user.username}</p>
                       <p><b>email: </b>{user.email}</p>
-                      {userNotice.type === 'success' && <p className='okMssg'>{userNotice.message}</p>}
+                      {userNotice.type === 'success' && <p className='okM ssg'>{userNotice.message}</p>}
                       {userNotice.type === 'failed' && <p className='errMssg'>{userNotice.message}</p>}
-                      <button className='defaultButton' onClick={(() => setIsUpdating('email'))}>Update email</button>
-                      <button className='defaultButton' onClick={(() => setIsUpdating('password'))}>Update password</button>
+                      <button className='defaultButton' onClick={(() => setIsUpdating(true))}>Update email/password</button>
                     </>
                     :
                     <>
-                      {/* If we are updating show form based on set value */}
-                      {isUpating === 'email' &&
-                        <form onSubmit={(e) => {
-                          updateUser(localStorage.getItem('token'), e.target.email.value);
-                          e.preventDefault();
-                        }}>
-                          <input type='email' name='email' placeholder='new email' /><br />
-                          <button type='button' onClick={ () => setIsUpdating(null)} className='cancelButton'>Cancel</button>
-                          <button type='submit' className='defaultButton'>Save</button>
-                        </form>
-                      }
-                      {isUpating === 'password' &&
-                        <form onSubmit={(e) => (setNewUserData(e, 'password'))}>
-                          <input type='password' name='pass' placeholder='Password' /><br />
-                          <input type='password' name='scndPass' placeholder='Repeat password' /> <br />
-                          {userNotice.type === 'password' && <p className='errMssg'>{userNotice.message}</p>}
-                          <button type='button' onClick={ () => setIsUpdating(null)} className='cancelButton'>Cancel</button>
+                      {/* If we are updating show update form  */}
+                      {isUpating &&
+                        <form onSubmit={handleSubmit(setNewUserData)}>
+                          <label>New email: </label>
+                          <input type='email' name='email' /><br />
+                          <p>You can change your password by inserting the new password twice: </p>
+                          <label>password: </label>
+                          <input type='password' minLength={6} name='password' /><br />
+                          <label>Repeat password: </label>
+                          <input type='password' name='secondPassword' minLength={6} /> <br />
+                          <button type='button' className='cancelButton'>Cancel</button>
                           <button type='submit' className='defaultButton'>Save</button>
                         </form>
                       }

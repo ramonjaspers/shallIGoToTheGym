@@ -105,20 +105,30 @@ export default function AuthContextProvider({ children }) {
      * @throws {Error} optionally throws an error
      * @returns {void} returns nothing
      */
-    const updateUser = async (JWT, newEmail, password) => {
+    const updateUser = async (JWT, email, password) => {
         // create a URLSearchParam object so we can pass keys only if they are needed
         const apiParams = new URLSearchParams();
-        // Set the data we want to update
-        apiParams.append('email', newEmail);
-        password && apiParams.append('password', password);
+        // Set all fields since they are mandatory and can be updated
+        apiParams.append('email', email);
+        apiParams.append('password', password);
+        // same as repeatedPassword, field is mandatory
+        apiParams.append('repeatedPassword', password);
         // Fetch the user data with the given token
-        await axios.post('https://polar-lake-14365.herokuapp.com/api/user/update/', {
-            data: { apiParams },
+        axios.post('https://polar-lake-14365.herokuapp.com/api/user/update', {
+            data: apiParams,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${JWT}`,
             }
         }).then(({ data }) => {
+            console.log(data);
+            toggleIsAuth({
+                ...isAuth,
+                user: {
+                    ...isAuth.user,
+                    email: email,
+                },
+            });
             console.log(data);
         }).catch((e) => {
             console.log(e);

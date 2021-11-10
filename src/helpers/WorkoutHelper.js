@@ -122,7 +122,7 @@ export default function useWorkoutState() {
      * @param {int} exerciseCatagory 
      * @param {int} equipment 
      * @param {string} comment 
-     * @returns {{Error}|{comment, workout}}
+     * @returns {Promise{Error}|{comment, workout}}
      */
     const generateWorkoutAdvice = async (exerciseCatagory, equipment, comment) => {
         if (exerciseCatagory === 4) {
@@ -155,6 +155,7 @@ export default function useWorkoutState() {
      * @param {{comment, workout}} data 
      */
     const storeWorkout = (advice, userId) => {
+        console.log(advice);
         if (userId) {
             // set the workout in the localStorage for user usage
             const workoutKey = 'workout' + userId;
@@ -164,7 +165,7 @@ export default function useWorkoutState() {
                 // remove item if it already exists so we can set a new one
                 localStorage.removeItem(workoutKey);
             }
-            const workoutData = { 'workout': advice.workout, 'comment': advice.comment };
+            const workoutData = { 'exercises': advice, 'comment': advice.comment };
             localStorage.setItem(workoutKey, JSON.stringify(workoutData));
         }
     }

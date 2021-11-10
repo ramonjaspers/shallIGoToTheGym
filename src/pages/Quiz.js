@@ -20,11 +20,14 @@ export default function Quiz() {
   } = useQuestionState();
   const { generateWorkoutAdvice, storeWorkout } = useWorkoutState();
   const { user } = useContext(AuthContext)
-  const [workout, setWorkout] = useState(null);
+  const [workout, setWorkout] = useState({ exercises: null, comment: null });
   const [isProcessing, setIsProcessing] = useState(false);
   const [userNotice, setUserNotice] = useState('');
   const history = useHistory();
 
+  /**
+   * On mount get the current question if there is none
+   */
   useEffect(() => {
     if (!currentQuestion.answerOptions.length > 0) {
       const initialQuestion = getQuestion(currentQuestion.questionScore);
@@ -32,7 +35,10 @@ export default function Quiz() {
     }
   });
 
-
+/**
+ * 
+ * @param {*} userInput 
+ */
   const onclickHandler = async (userInput) => {
     // Handle the user input
     const result = await handleAnswer(userInput);
@@ -51,7 +57,7 @@ export default function Quiz() {
         setWorkout({ 'exercises': advice.workout, 'comment': advice.comment });
         if (user) {
           // if a user is set we also want to store the workout for later use
-          storeWorkout(advice, user.id);
+          storeWorkout(advice.workout, user.id);
         }
       }
       setIsProcessing(false);
@@ -71,7 +77,8 @@ export default function Quiz() {
             : <>
               {!userNotice ?
                 <>
-                  {!workout ?
+                {/* if workout comment is set or exercises show result */}
+                  {!workout.comment && !workout.exercises ?
                     <>
                       {/* no workout is set nor userNotice, we show the questions */}
                       <h4>Progress {currentQuestion.questionScore / (questions.length) * 100}%</h4>
@@ -90,7 +97,7 @@ export default function Quiz() {
                           {/* User is not set, show login option */}
                           <p>You are currently nog logged in, this means your workout will not be saved to your profile. Login anyways and store your workout to your profile?</p>
                           {/* Pushing to the histrory with LocationDescriptorObject for state binding */}
-                          <button className='defaultButton' onClick={() => { history.push({ pathname: '/login', state: { workout } }) }}>Login</button>
+                          <button className='defaultButton' onClick={() => { history.push({ pathname: '/login', state: { exercises: workout.exercises} }) }}>Login</button>
                         </>
                       }
                       <p><b>Not happy with the result?</b></p>
