@@ -1,5 +1,5 @@
-/* customButton style */
-.customButton {
+/* custom-button style */
+.custom-button {
   background-color: #f2c300;
   color: white;
   padding: 15px 25px;
@@ -12,6 +12,6 @@
   text-transform: uppercase;
 }
 
-.customButton:hover {
+.custom-button:hover {
   background-color: #fade6f;
 }

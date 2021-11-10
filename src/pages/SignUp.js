@@ -48,23 +48,23 @@ export default function SignUp() {
   return (
     <div className='content'>
       <div className='container'>
-        <div className='backButton' onClick={() => history.push('/login')}>&#8592;</div>
-        <div className="containerTitle"><h4>Register</h4></div>
+        <div className='back-button' onClick={() => history.push('/login')}>&#8592;</div>
+        <div className="container-title"><h4>Register</h4></div>
         <form onSubmit={handleSubmit(createUser)}>
           <input type="email" placeholder="email" {...register("email", { required: true, maxLength: 80 })} /> <br />
-          {errors.email && <p className='errMssg'>{errors.email.message}</p>}
+          {errors.email && <p className='error-message'>{errors.email.message}</p>}
           <input type="text" placeholder="username" {...register("username", {})} /><br />
-          {errors.username && <p className='errMssg'>{errors.username.message}</p>}
+          {errors.username && <p className='error-message'>{errors.username.message}</p>}
           <input type="password" placeholder="password" {...register("password", { required: true, maxLength: 100 })} /><br />
-          {errors.password && <p className='errMssg'>{errors.password.message}</p>}
+          {errors.password && <p className='error-message'>{errors.password.message}</p>}
           <input type="password" placeholder="Repeat password" {...register("repeatedPassword", { required: true, maxLength: 100 })} /><br />
-          {errors.repeatedPassword && <p className='errMssg'>{errors.repeatedPassword.message}</p>}
+          {errors.repeatedPassword && <p className='error-message'>{errors.repeatedPassword.message}</p>}
           {!isLoading
-            ? <input className='defaultButton' type="submit" onClick={() => clearErrors('api')} />
+            ? <input className='default-button' type="submit" onClick={() => clearErrors('api')} />
             : <Loader type="TailSpin" color="#00BFFF" height={150} width={150} />
           }
           <br />
-          {errors.api && <p className='errMssg'>{errors.api.message}</p>}
+          {errors.api && <p className='error-message'>{errors.api.message}</p>}
         </form>
       </div>
     </div>

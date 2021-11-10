@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import Exercise from '../components/Exercise';
 import Loader from 'react-loader-spinner';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 // import css
 import '../assets/styles/Profile.css'
 
 export default function Profile() {
   const { user, fetchUser, updateUser } = useContext(AuthContext);
-  const { handleSubmit } = useForm();
+  const { register, handleSubmit, setError, formState: { errors } } = useForm();
   const [exercises, setExercises] = useState([]);
   const [userNotice, setUserNotice] = useState({ type: null, message: null });
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +29,6 @@ export default function Profile() {
       // get the user workout from localstorage
       const workout = getUserSpecificWorkout('workout' + user.id);
       // store the exercises in the state
-      console.log(workout);
       setExercises(workout.exercises);
     }
     setIsLoading(false);
@@ -49,34 +49,54 @@ export default function Profile() {
     }
     return [];
   }
+
+
+
+  /**
+       * Fetches the user data from the external NOVI heorku API
+       * @param {string} JWT JSON Web Token
+       * @throws {Error} optionally throws an error
+       * @returns {bool} returns success=true||false
+       */
   const setNewUserData = async (data) => {
     // show loader
     setIsLoading(true);
-    try {
-      if (data.password === data.secondPassword) {
-        await updateUser(localStorage.getItem('token'), data.email, data.password);
-        setUserNotice({ type: 'success', message: `Data has been updated` });
-      } else {
-        setUserNotice({ type: 'password', message: 'Passwords do not match' });
-      }
-      // when done set loading to false and stop the updating section
-      setIsUpdating(null)
-      setIsLoading(false);
-    } catch (e) {
-      // on error set user message and turn off the loader
-      setUserNotice({ type: 'failed', message: `Data has not been updated, try again.` });
-      setIsUpdating(null)
-      setIsLoading(false);
+    if (data.password === data.repeatedPassword) {
+      // fetch token for auth
+      const token = localStorage.getItem('token');
+      // Fetch the user data with the given token and params
+      axios.post('https://polar-lake-14365.herokuapp.com/api/user/update', {
+        ...data
+      },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          }
+        }).then(({ data }) => {
+          updateUser(data);
+          setUserNotice({ type: 'success', message: `Data has been updated` });
+          setIsUpdating(false);
+        }).catch((e) => {
+          setUserNotice({ type: 'failed', message: `Data has not been updated, try again.` });
+        });
+    } else {
+      setError("repeatedPassword", {
+        type: "manual",
+        message: "Passwords do not match",
+      });
     }
+    // when done set loading to false and stop the updating section
+    setIsLoading(false);
   }
 
   return (
     <div className='content'>
       {!isLoading ?
         <>
-          <div id='profileWrapper'>
+          <div id='profile-wrapper'>
             {/* left bar, user info */}
-            <div id='userInfo'>
+            <div id='user-info'>
               {userNotice.type !== 'api' ?
                 <>
                   {!isUpating ?
@@ -86,23 +106,40 @@ export default function Profile() {
                       <p><b>Username: </b>{user.username}</p>
                       <p><b>email: </b>{user.email}</p>
                       {userNotice.type === 'success' && <p className='okM ssg'>{userNotice.message}</p>}
-                      {userNotice.type === 'failed' && <p className='errMssg'>{userNotice.message}</p>}
-                      <button className='defaultButton' onClick={(() => setIsUpdating(true))}>Update email/password</button>
+                      {userNotice.type === 'failed' && <p className='error-message'>{userNotice.message}</p>}
+                      <button className='default-button' onClick={(() => setIsUpdating(true))}>Update email/password</button>
                     </>
                     :
                     <>
                       {/* If we are updating show update form  */}
                       {isUpating &&
+
                         <form onSubmit={handleSubmit(setNewUserData)}>
+                        <h2>Update user</h2>
                           <label>New email: </label>
-                          <input type='email' name='email' /><br />
+                          <input type='email' name='email' {...register("email", {
+                            required: 'Email is required.',
+                          })} /><br />
+                          {errors.email && <p className='error-message'>{errors.email.message}</p>}
                           <p>You can change your password by inserting the new password twice: </p>
                           <label>password: </label>
-                          <input type='password' minLength={6} name='password' /><br />
+                          <input type='password' minLength={6} name='password' {...register("password", {
+                            required: 'Password is required.',
+                            maxLength: { value: 100, message: 'Invalid password given.' },
+                            minLength: { value: 6, message: 'Invalid password given.' }
+                          })} /><br />
+                          {errors.password && <p className='error-message'>{errors.password.message}</p>}
+
                           <label>Repeat password: </label>
-                          <input type='password' name='secondPassword' minLength={6} /> <br />
-                          <button type='button' className='cancelButton'>Cancel</button>
-                          <button type='submit' className='defaultButton'>Save</button>
+                          <input type='password' name='repeatedPassword' minLength={6} {...register("repeatedPassword", {
+                            required: 'Password is required.',
+                            maxLength: { value: 100, message: 'Invalid password given.' },
+                            minLength: { value: 6, message: 'Invalid password given.' }
+                          })} /> <br />
+                          {errors.repeatedPassword && <p className='error-message'>{errors.repeatedPassword.message}</p>}
+
+                          <button type='button' className='cancel-button' onClick={(() => setIsUpdating(false))}>Cancel</button>
+                          <button type='submit' className='default-button'>Save</button>
                         </form>
                       }
                     </>
@@ -111,13 +148,13 @@ export default function Profile() {
                 :
                 <>
                   {/* show userNotice if one is set */}
-                  <p className='errMssg'>{userNotice.message}</p>
+                  <p className='error-message'>{userNotice.message}</p>
                 </>
               }
             </div>
-            <div id='workoutInfo'>
+            <div id='workout-info'>
               {/* right bar, workout info */}
-              <p id='workoutTitle'>Your saved workout</p>
+              <p id='workout-title'>Your saved workout</p>
               {exercises && exercises.length > 0 ?
                 <>
                   <h5>To search for the exercise, just click on the exercise of choice.</h5>

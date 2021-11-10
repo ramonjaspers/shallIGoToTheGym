@@ -100,42 +100,12 @@ export default function AuthContextProvider({ children }) {
     }
 
     /**
-     * Fetches the user data from the external NOVI heorku API
-     * @param {string} JWT JSON Web Token
-     * @throws {Error} optionally throws an error
+     * 
+     * Updates isAuth state with userData
+     * @param {object} userData userData from the update
      * @returns {void} returns nothing
      */
-    const updateUser = async (JWT, email, password) => {
-        // create a URLSearchParam object so we can pass keys only if they are needed
-        const apiParams = new URLSearchParams();
-        // Set all fields since they are mandatory and can be updated
-        apiParams.append('email', email);
-        apiParams.append('password', password);
-        // same as repeatedPassword, field is mandatory
-        apiParams.append('repeatedPassword', password);
-        // Fetch the user data with the given token
-        axios.post('https://polar-lake-14365.herokuapp.com/api/user/update', {
-            data: apiParams,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${JWT}`,
-            }
-        }).then(({ data }) => {
-            console.log(data);
-            toggleIsAuth({
-                ...isAuth,
-                user: {
-                    ...isAuth.user,
-                    email: email,
-                },
-            });
-            console.log(data);
-        }).catch((e) => {
-            console.log(e);
-            throw new Error('Updating user');
-        });
-    }
-
+    const updateUser = (userData) => toggleIsAuth({ ...isAuth, user: { ...isAuth.user, email: userData.email } });
 
     // Set ContextData (params which get exported and are resusable within the context)
     const contextData = {

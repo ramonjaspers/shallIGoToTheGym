@@ -155,7 +155,6 @@ export default function useWorkoutState() {
      * @param {{comment, workout}} data 
      */
     const storeWorkout = (advice, userId) => {
-        console.log(advice);
         if (userId) {
             // set the workout in the localStorage for user usage
             const workoutKey = 'workout' + userId;

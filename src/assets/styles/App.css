@@ -45,11 +45,11 @@
   background-image: url("../images/defaultBG.jpeg");
 }
 
-.containerTitle {
+.container-title {
   padding: 50px 0 25px 0;
 }
 
-.containerContent {
+.container-content {
   padding-bottom: 50px;
   padding-left: 50px;
   padding-right: 50px;
@@ -59,7 +59,7 @@
   justify-content: center;
 }
 
-.backButton {
+.back-button {
   position: absolute;
   font-size: 30px;
   font-weight: bold;
@@ -68,16 +68,16 @@
   color: #ffffff;
 }
 
-.backButton:hover {
+.back-button:hover {
   color: #f2c300;
   cursor: pointer;
 }
 
-.errMssg {
+.error-message {
   font-weight: lighter;
   color: red;
 }
-.okMssg {
+.success-message {
   font-weight: lighter;
   color: green;
 }
@@ -147,8 +147,8 @@ select {
   width: 300px;
 }
 
-.defaultButton,
-.cancelButton {
+.default-button,
+.cancel-button {
   background-color: #f2c300;
   color: white;
   padding: 14px 20px;
@@ -162,14 +162,14 @@ select {
   width: 200px;
 }
 
-.cancelButton {
+.cancel-button {
   background-color: rgb(75, 75, 75);
 }
-.cancelButton:hover {
+.cancel-button:hover {
   background-color: #cccccc;
 }
 
-.defaultButton:hover {
+.default-button:hover {
   background-color: #fade6f;
 }
 
@@ -193,16 +193,16 @@ select {
   .container {
     width: 100%;
   }
-  .containerContent {
+  .container-content {
     padding-bottom: 15px;
     padding-left: 0px;
     padding-right: 0px;
   }
-  .containerTitle {
+  .container-title {
     padding-top: 15px;
   }
 
-  .backButton {
+  .back-button {
     position: inherit;
   }
 }

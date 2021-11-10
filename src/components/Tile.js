@@ -10,7 +10,7 @@ export default function Tile({ image, title, text, goTo, buttonText }) {
     return (
         <section>
             {image
-                ? <img id='tileImage' src={image} alt={image} />
+                ? <img id='tile-image' src={image} alt={image} />
                 : <>
                     <h1>{title}</h1>
                     <p>{text}</p>

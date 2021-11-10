@@ -1,4 +1,4 @@
-.questionAnswer {
+.question-answer {
   text-align: center;
   align-items: auto;
   width: 80%;
@@ -10,6 +10,6 @@
   border: none;
 }
 
-.customButton:hover {
+.custom-button:hover {
   background-color: #fade6f;
 }

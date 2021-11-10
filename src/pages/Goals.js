@@ -11,7 +11,7 @@ export default function Goals() {
     return (
         <>
             {!goal ?
-                <div className="rowGoals">
+                <div id="goal-row">
                     <Goal goal='weightloss' />
                     <Goal goal='musclegain' />
                     <Goal goal='maintenance' />

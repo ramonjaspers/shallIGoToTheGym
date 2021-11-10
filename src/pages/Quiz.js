@@ -67,8 +67,8 @@ export default function Quiz() {
   return (
     <div className='content'>
       <div className='container'>
-        <div className='backButton' onClick={() => history.push('/')}>&#8592;</div>
-        <div className='containerContent'>
+        <div className='back-button' onClick={() => history.push('/')}>&#8592;</div>
+        <div className='container-content'>
           {isProcessing
             ? <>
               <h6> Loading exercises... </h6>
@@ -84,7 +84,7 @@ export default function Quiz() {
                       <h4>Progress {currentQuestion.questionScore / (questions.length) * 100}%</h4>
                       <h5>{currentQuestion.questionText}</h5>
                       {currentQuestion.answerOptions.map((option, key) => (
-                        <button className='questionAnswer' key={key} onClick={() => onclickHandler(option)}>{option.text}</button>
+                        <button className='question-answer' key={key} onClick={() => onclickHandler(option)}>{option.text}</button>
                       ))}
                     </>
                     :
@@ -97,7 +97,7 @@ export default function Quiz() {
                           {/* User is not set, show login option */}
                           <p>You are currently nog logged in, this means your workout will not be saved to your profile. Login anyways and store your workout to your profile?</p>
                           {/* Pushing to the histrory with LocationDescriptorObject for state binding */}
-                          <button className='defaultButton' onClick={() => { history.push({ pathname: '/login', state: { exercises: workout.exercises} }) }}>Login</button>
+                          <button className='default-button' onClick={() => { history.push({ pathname: '/login', state: { exercises: workout.exercises} }) }}>Login</button>
                         </>
                       }
                       <p><b>Not happy with the result?</b></p>
@@ -105,7 +105,7 @@ export default function Quiz() {
                         *history.go() forces a redirect to the last set history value. 
                         *On redirect we also lose the states which we want to start over.
                         **/}
-                      <button className='defaultButton' onClick={() => history.go()}>Try again</button>
+                      <button className='default-button' onClick={() => history.go()}>Try again</button>
                       {workout.exercises && workout.exercises.length > 0 &&
                         <>
                           <h5>Give the following exercises a try</h5>
@@ -120,7 +120,7 @@ export default function Quiz() {
                 :
                 <>
                   {/* userNotice is set, show the message */}
-                  <h6 className='errMssg'>{userNotice}</h6>
+                  <h6 className='error-message'>{userNotice}</h6>
                 </>
               }
             </>

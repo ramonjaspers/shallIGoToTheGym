@@ -49,9 +49,9 @@ export default function Exercises() {
         // Overwrite the default background
         <div className='content' style={{ backgroundImage: `url(${exercisesBG})` }}>
             <div className='container'>
-                <div className='backButton' onClick={() => history.push('/')}>&#8592; </div>
-                <div className='containerContent'>
-                    <h4 className='containerTitle'>Find exercises</h4>
+                <div className='back-button' onClick={() => history.push('/')}>&#8592; </div>
+                <div className='container-content'>
+                    <h4 className='container-title'>Find exercises</h4>
                     <div id='exerciseSelector'>
                         <select onChange={(e) => getExercises(e)}>
                             <option key={null} value='-'>Select a muscle</option>
@@ -59,7 +59,7 @@ export default function Exercises() {
                                 <option key={muscle.id} value={muscle.id}>{muscle.name}</option>
                             )};
                         </select>
-                        {error && <p className='errMssg'>{error}</p>}
+                        {error && <p className='error-message'>{error}</p>}
                     </div>
                     {exercises.processing &&
                         <Loader type="TailSpin" color="#00BFFF" height={'10vw'} width={'10vw'} />

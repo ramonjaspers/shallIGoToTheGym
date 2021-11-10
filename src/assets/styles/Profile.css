@@ -1,4 +1,4 @@
-#profileWrapper {
+#profile-wrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -6,34 +6,34 @@
   height: 100%;
 }
 
-#userInfo,
-#workoutInfo {
+#user-info,
+#workout-info {
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
   min-width: 300px;
 }
 
-#userInfo {
+#user-info {
   flex: 1;
   background-color: rgba(255, 255, 255, 0.9);
   align-items: center;
   height: 100%;
 }
-#workoutInfo {
+#workout-info {
   color: #ffffff;
   background-color: rgba(1, 5, 103, 0.8);
   flex: 33% 1;
 }
 
-#workoutTitle {
+#workout-title {
   font-size: 5em;
   color: #ffffff;
   margin: 0;
 }
 
 @media screen and (max-width: 600px) {
-  #profileWrapper {
+  #profile-wrapper {
     height: auto;
   }
 }

@@ -12,31 +12,31 @@ export default function Navigation() {
 
   return (
     <div className='row navigation'>
-      <ul id='naviagtionItems'>
-        <li className='appLogo'>
+      <ul id='naviagtion-items'>
+        <li id='app-logo'>
           <NavLink to='/home'>SIGTTG</NavLink>
         </li>
-        <li className='navigationUrl'>
+        <li className='navigation-url'>
           <NavLink to='/goals'>GOAL<br />ADVICE</NavLink>
         </li>
-        <li className='navigationUrl'>
+        <li className='navigation-url'>
           <NavLink to='/tdee'>TDEE<br />CALCULATOR</NavLink>
         </li>
-        <li className='navigationUrl'>
+        <li className='navigation-url'>
           <NavLink to='/exercises'>EXERCISE<br />FINDER</NavLink>
         </li>
         {user ?
-          <li className='navigationUrl'>
+          <li className='navigation-url'>
             <div id='dropdown'>
-              <p id='dropdownButton'>{user.username} 👤</p>
-              <div id='dropdownContent'>
+              <p id='dropdown-button'>{user.username} 👤</p>
+              <div id='dropdown-content'>
                 <NavLink className='dropdownItem' to='/profile'>Profile 💪</NavLink>
                 <NavLink className='dropdownItem' to='/logout'>Logout 🚪</NavLink>
               </div>
             </div>
           </li>
           :
-          <li className='navigationUrl'>
+          <li className='navigation-url'>
             <NavLink to='/login'>Login</NavLink>
           </li>
         }

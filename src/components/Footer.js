@@ -8,7 +8,7 @@ import '../assets/styles/Footer.css';
 export default function Footer() {
   return (
     <div className='row footer'>
-      <p id='footerText'>@2021 - 2021 WWW.SHALLIGOTOTHEGYM.COM - ALL RIGHTS RESERVED</p>
+      <p id='footer-text'>@2021 - 2021 WWW.SHALLIGOTOTHEGYM.COM - ALL RIGHTS RESERVED</p>
     </div>
   );
 }

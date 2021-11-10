@@ -1,8 +1,8 @@
-.columnWrapper {
+.column-wrapper {
   flex: 33.33%;
 }
 
-.rowGoals {
+#goal-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

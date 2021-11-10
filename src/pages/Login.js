@@ -34,7 +34,6 @@ export default function Login() {
       // set IsAuth login state
       login(userData);
       if (history.location.state && history.location.state.exercises ) {
-        console.log(history.location.state);
         // if the workout state is set we want to set this
         storeWorkout(history.location.state.exercises, data.id);
       }
@@ -54,8 +53,8 @@ export default function Login() {
   return (
     <div className='content'>
       <div className='container'>
-        <div className='backButton' onClick={() => history.push('/')}>&#8592;</div>
-        <div className="containerTitle"><h4>Login</h4></div>
+        <div className='back-button' onClick={() => history.push('/')}>&#8592;</div>
+        <div className="container-title"><h4>Login</h4></div>
         {!isAuth
           ?
           <form onSubmit={handleSubmit(signIn)}>
@@ -63,21 +62,21 @@ export default function Login() {
               required: 'Username is required.',
               maxLength: { value: 80, message: 'Invalid username given.' }
             })} /><br />
-            {errors.username && <p className='errMssg'>{errors.username.message}</p>}
+            {errors.username && <p className='error-message'>{errors.username.message}</p>}
             <input type="password" placeholder="Password" {...register("password", {
               required: 'Password is required.',
               maxLength: { value: 100, message: 'Invalid password given.' }
             })} /><br />
-            {errors.password && <p className='errMssg'>{errors.password.message}</p>}
+            {errors.password && <p className='error-message'>{errors.password.message}</p>}
             {!isLoading
-              ? <input className="defaultButton" type="submit" onClick={() => clearErrors('api')} />
+              ? <input className="default-button" type="submit" onClick={() => clearErrors('api')} />
               : <Loader type="TailSpin" color="#00BFFF" height={150} width={150} />
             }
             <br />
-            {errors.api && <p className='errMssg'>{errors.api.message}</p>}
+            {errors.api && <p className='error-message'>{errors.api.message}</p>}
             <p>Dont have an account? <Link to="/signup">Sign up</Link> to our platform.</p>
           </form>
-          : <h4 className='errMssg'>You are already logged in</h4>
+          : <h4 className='error-message'>You are already logged in</h4>
         }
       </div>
     </div>
