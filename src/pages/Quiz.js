@@ -120,7 +120,7 @@ export default function Quiz() {
                 </>
                 :
                 <>
-                  {/* userNotice is set, show the message */}
+                  {/* userNotice is set, show notice message */}
                   <h6 className='error-message'>{userNotice}</h6>
                 </>
               }

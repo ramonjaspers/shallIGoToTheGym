@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+
 export default function Advice({ goal }) {
   const history = useHistory();
 
@@ -9,9 +10,9 @@ export default function Advice({ goal }) {
    * @returns bool
    */
   const isValidGoal = (goal) => {
-    const goals = ['weightloss', 'maintenance', 'musclegain']
+    const goals = ['weightloss', 'maintenance', 'musclegain'];
     return goals.indexOf(goal) > -1;
-  }
+  };
 
   /**
    *  Gets advice string based on the given goal
@@ -29,7 +30,7 @@ export default function Advice({ goal }) {
       default:
         return 'Goal not found.';
     }
-  }
+  };
 
   return (
     <div className={isValidGoal(goal) ? goal : 'maintenance'}>

@@ -4,25 +4,6 @@
   flex-wrap: wrap;
 }
 
-section {
-  color: #010567;
-  width: 50%;
-  min-width: 450px;
-  max-height: 750px;
-  overflow: hidden;
-  flex-grow: 1;
-  flex-shrink: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #E5E5E5;
-}
-
-section p {
-  max-width: 60%;
-}
-
 /* landing css */
 #land {
   position: relative;
@@ -97,4 +78,23 @@ article span {
   color: white;
   font-size: 8px;
   padding: 4px;
+}
+
+section {
+  color: #010567;
+  width: 50%;
+  min-width: 450px;
+  max-height: 750px;
+  overflow: hidden;
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #E5E5E5;
+}
+
+section p {
+  max-width: 60%;
 }

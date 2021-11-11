@@ -19,12 +19,8 @@ export default function Profile() {
     // if user isnt set fetch the user data one more time
     if (!user.email) {
       setIsLoading(true);
-      try {
-        // Fetch user data with the stored json webtoken
-        fetchUser(localStorage.getItem('token'));
-      } catch (e) {
-        setUserNotice({ type: 'api', message: 'An error has occured, the user data seems incomplete.\n Try to login again or contact support.' });
-      }
+      // Fetch user data with the stored json webtoken
+      fetchUser(localStorage.getItem('token'));
     } else {
       // get the user workout from localstorage
       const workout = getUserSpecificWorkout('workout' + user.id);
@@ -43,21 +39,20 @@ export default function Profile() {
   const getUserSpecificWorkout = (storageKey) => {
     const workoutString = localStorage.getItem(storageKey);
     if (workoutString) {
+      // since the workout object has been JSON.stringified we parse it back to an object
       const workout = JSON.parse(workoutString);
       // Set the user specified workout
       return workout;
     }
     return [];
-  }
-
-
+  };
 
   /**
-       * Fetches the user data from the external NOVI heorku API
-       * @param {string} JWT JSON Web Token
-       * @throws {Error} optionally throws an error
-       * @returns {bool} returns success=true||false
-       */
+   * Fetches the user data from the external NOVI heorku API
+   * @param {object} data html field values aliased by name
+   * @throws {Error} optionally throws an error
+   * @returns {bool} returns success=true||false
+   */
   const setNewUserData = async (data) => {
     // show loader
     setIsLoading(true);
@@ -88,7 +83,7 @@ export default function Profile() {
     }
     // when done set loading to false and stop the updating section
     setIsLoading(false);
-  }
+  };
 
   return (
     <div className='content'>
@@ -112,33 +107,31 @@ export default function Profile() {
                     :
                     <>
                       {/* If we are updating show update form  */}
-                      {isUpating &&
-                        <form onSubmit={handleSubmit(setNewUserData)}>
-                          <h2>Update user</h2>
-                          <label>New email: </label>
-                          <input type='email' name='email' {...register("email", {
-                            required: 'Email is required.',
-                          })} /><br />
-                          {errors.email && <p className='error-message'>{errors.email.message}</p>}
-                          <p>You can change your password by inserting the new password twice: </p>
-                          <label>password: </label>
-                          <input type='password' minLength={6} name='password' {...register("password", {
-                            required: 'Password is required.',
-                            maxLength: { value: 100, message: 'Invalid password given.' },
-                            minLength: { value: 6, message: 'Invalid password given.' }
-                          })} /><br />
-                          {errors.password && <p className='error-message'>{errors.password.message}</p>}
-                          <label>Repeat password: </label>
-                          <input type='password' name='repeatedPassword' minLength={6} {...register("repeatedPassword", {
-                            required: 'Password is required.',
-                            maxLength: { value: 100, message: 'Invalid password given.' },
-                            minLength: { value: 6, message: 'Invalid password given.' }
-                          })} /> <br />
-                          {errors.repeatedPassword && <p className='error-message'>{errors.repeatedPassword.message}</p>}
-                          <button type='button' className='cancel-button' onClick={(() => setIsUpdating(false))}>Cancel</button>
-                          <button type='submit' className='default-button'>Save</button>
-                        </form>
-                      }
+                      <form onSubmit={handleSubmit(setNewUserData)}>
+                        <h2>Update user</h2>
+                        <label>New email: </label>
+                        <input type='email' name='email' {...register("email", {
+                          required: 'Email is required.',
+                        })} /><br />
+                        {errors.email && <p className='error-message'>{errors.email.message}</p>}
+                        <p>You can change your password by inserting the new password twice: </p>
+                        <label>password: </label>
+                        <input type='password' minLength={6} name='password' {...register("password", {
+                          required: 'Password is required.',
+                          maxLength: { value: 100, message: 'Invalid password given.' },
+                          minLength: { value: 6, message: 'Invalid password given.' }
+                        })} /><br />
+                        {errors.password && <p className='error-message'>{errors.password.message}</p>}
+                        <label>Repeat password: </label>
+                        <input type='password' name='repeatedPassword' minLength={6} {...register("repeatedPassword", {
+                          required: 'Password is required.',
+                          maxLength: { value: 100, message: 'Invalid password given.' },
+                          minLength: { value: 6, message: 'Invalid password given.' }
+                        })} /> <br />
+                        {errors.repeatedPassword && <p className='error-message'>{errors.repeatedPassword.message}</p>}
+                        <button type='button' className='cancel-button' onClick={(() => setIsUpdating(false))}>Cancel</button>
+                        <button type='submit' className='default-button'>Save</button>
+                      </form>
                     </>
                   }
                 </>

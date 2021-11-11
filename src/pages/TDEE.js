@@ -100,6 +100,7 @@ export default function TDEE() {
                     </>
                     :
                     <>
+                    {/* TDEE is set, show results  */}
                         <div className='container-content'>
                             <h4 className='container-title'>Your result</h4>
                             <h5>BMR: {Math.floor(BMR)} </h5>

@@ -99,7 +99,6 @@ h2 {
   font-weight: lighter;
 }
 
-/* general components */
 h3 {
   font-family: "Roboto", serif;
   font-size: 3em;
@@ -186,10 +185,6 @@ select {
 
 /* allow items to get as small as possible */
 @media screen and (max-width: 750px) {
-  .column {
-    width: 100%;
-  }
-
   .container {
     width: 100%;
   }

@@ -34,7 +34,7 @@ export default function AuthContextProvider({ children }) {
         if (token) {
             if (tokenState(token)) {
                 // Fetch the user data since token is set and valid
-                fetchUser(token).catch(e => toggleIsAuth({ ...isAuth, status: 'done' }));
+                fetchUser(token);
             } else {
                 // Logout since token is not valid
                 logout();
@@ -63,9 +63,9 @@ export default function AuthContextProvider({ children }) {
         // Remove token and unset authentication
         localStorage.removeItem('token')
         toggleIsAuth({ isAuth: false, user: null, status: 'done' });
-        // Goto homepage
+        // Go to homepage
         history.push('/');
-    }
+    };
 
     /**
      * 
@@ -88,16 +88,15 @@ export default function AuthContextProvider({ children }) {
                 user: {
                     email: data.email,
                     username: data.username,
-                    id: data.id
+                    id: data.id,
                 },
-                status: 'done'
+                status: 'done',
             });
-            // If something goes wrong, log error and do nothing
         }).catch((e) => {
+            // If something goes wrong, finish Auth process with default values
             toggleIsAuth({ ...isAuth, status: 'done' });
-            throw new Error('Fetching user failed');
         });
-    }
+    };
 
     /**
      * 

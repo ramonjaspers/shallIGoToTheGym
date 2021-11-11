@@ -52,7 +52,7 @@ export default function useWorkoutState() {
             // if something goes throw error
             throw new Error('Failed to get the excercises from the external api');
         }
-    }
+    };
 
     /**
      * 
@@ -62,7 +62,7 @@ export default function useWorkoutState() {
     const fetchExerciseMuscles = async (muscleId) => {
         return axios.get(`https://wger.de/api/v2/muscle/${muscleId ?? ''}/?language=2`, {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
         }).then(({ data }) => {
             return muscleId ? data : data.results;
@@ -70,7 +70,7 @@ export default function useWorkoutState() {
             // if something goes wrong throw error
             throw new Error('Failed to get the muscles from the external api');
         });
-    }
+    };
 
     /**
      * Fetches an image from the external WGER API based on the given excercise ID
@@ -97,7 +97,7 @@ export default function useWorkoutState() {
             // if something goes wrong return false so we dont get a picture and can continue the happy flow
             return false;
         }
-    }
+    };
 
     /**
      * returns the api catagories based on question catagory result
@@ -115,7 +115,7 @@ export default function useWorkoutState() {
             return [8, 12, 11, 13];
         }
         return [];
-    }
+    };
 
     /**
      * Generates workout advice based on given params
@@ -141,14 +141,14 @@ export default function useWorkoutState() {
             try {
                 const result = await fetchExercises(null, equipment, exerciseCatagories);
                 // Use sorting algo to shuffle the array, use slice with a base from index 0 to 8 to get max 8 exercises
-                const exercises = result.sort(() => .5 - Math.random()).slice(0, 8)
+                const exercises = result.sort(() => .5 - Math.random()).slice(0, 8);
                 return comment ? { comment: comment, workout: exercises } : { workout: exercises };;
             } catch (e) {
                 //catch the Error thrown and return error
                 return { error: e };
             }
         }
-    }
+    };
 
     /**
      * Stores the workout in the localStorage for later usage
@@ -167,7 +167,7 @@ export default function useWorkoutState() {
             const workoutData = { 'exercises': advice, 'comment': advice.comment };
             localStorage.setItem(workoutKey, JSON.stringify(workoutData));
         }
-    }
+    };
 
     return {
         fetchExercises,

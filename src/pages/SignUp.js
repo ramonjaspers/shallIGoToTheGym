@@ -23,7 +23,7 @@ export default function SignUp() {
       // Register with form data
       await axios.post(`https://polar-lake-14365.herokuapp.com/api/auth/signup`, {
         ...data,
-        'role': ['user']
+        'role': ['user'],
       }).then((data) => {
         // Stop loader, redirect to login with signUp state
         setIsLoading(false);
@@ -42,7 +42,7 @@ export default function SignUp() {
         message: "Passwords do not match",
       });
     }
-  }
+  };
 
   return (
     <div className='content'>

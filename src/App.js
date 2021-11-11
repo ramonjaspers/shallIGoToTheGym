@@ -31,7 +31,7 @@ export default function App() {
                 {authState ? children : <Redirect to="/" />}
             </Route>
         );
-    }
+    };
 
     return (
         <div className='box'>

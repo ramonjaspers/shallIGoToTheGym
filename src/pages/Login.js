@@ -55,8 +55,7 @@ export default function Login() {
       <div className='container'>
         <div className='back-button' onClick={() => history.push('/')}>&#8592;</div>
         <div className="container-title"><h4>Login</h4></div>
-        {!isAuth
-          ?
+        {!isAuth ?
           <form onSubmit={handleSubmit(signIn)}>
           {history.location.state && history.location.state.signUp && <p className='success-message'>{history.location.state.signUp}</p>}
             <input type="text" placeholder="username" {...register("username", {

@@ -122,7 +122,7 @@ export default function useQuestionState() {
         }
         // Return empty object with no props since the quiz hasnt finished
         return {};
-    }
+    };
 
     // return the props we want to use in external files 
     return {

@@ -20,7 +20,7 @@ export default function Goals() {
                 <Advice goal={goal} />
             }
         </>
-    )
+    );
 }
 
 

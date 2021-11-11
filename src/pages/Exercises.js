@@ -62,15 +62,17 @@ export default function Exercises() {
                         </select>
                         {error && <p className='error-message'>{error}</p>}
                     </div>
-                    {exercises.processing &&
-                        <Loader type="TailSpin" color="#00BFFF" height={'10vw'} width={'10vw'} />
-                    }
-                    {exercises.exercises.length > 1 && exercises.processing === false &&
-                        <>
-                            <p>To search for the exercise, just click on the exercise of choice.</p>
-                            {exercises.exercises.map(exercise =>
-                                <Exercise key={exercise.id} exercise={exercise} />
-                            )}
+                    {exercises.processing
+                        ? <Loader type="TailSpin" color="#00BFFF" height={'10vw'} width={'10vw'} />
+                        : <>
+                            {exercises.exercises.length > 1 &&
+                                <>
+                                    <p>To search for the exercise, just click on the exercise of choice.</p>
+                                    {exercises.exercises.map(exercise =>
+                                        <Exercise key={exercise.id} exercise={exercise} />
+                                    )}
+                                </>
+                            }
                         </>
                     }
                 </div>

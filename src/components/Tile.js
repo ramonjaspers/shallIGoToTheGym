@@ -15,7 +15,7 @@ export default function Tile({ image, title, text, goTo, buttonText }) {
                     <h1>{title}</h1>
                     <p>{text}</p>
                     <Button text={buttonText} link={goTo} />
-                </>
+                  </>
             }
         </section>
     );
