@@ -112,6 +112,7 @@ export default function useQuestionState() {
         setEquipment(currentEquipment);
         if (nextQuestionScore > 7) {
             if (nextQuestionScore > 900) {
+                console.log(currentComment);
                 return { catagory: 4, equipment: currentEquipment, comment: currentComment };
             } else {
                 return { catagory: workoutType, equipment: currentEquipment, comment: currentComment };

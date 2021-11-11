@@ -58,7 +58,7 @@ export default function Quiz() {
         setWorkout({ 'exercises': advice.workout, 'comment': advice.comment });
         if (user) {
           // if a user is set we also want to store the workout for later use
-          storeWorkout(advice.workout, user.id);
+          storeWorkout(advice, user.id);
         }
       }
       setIsProcessing(false);

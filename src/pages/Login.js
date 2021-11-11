@@ -35,7 +35,8 @@ export default function Login() {
       login(userData);
       if (history.location.state && history.location.state.exercises ) {
         // if exercises are set in the current location state we want to store these for the logged in user.
-        storeWorkout(history.location.state.exercises, data.id);
+        // set exercises in workout object
+        storeWorkout({workout: history.location.state.exercises}, data.id);
       }
       //remove loader and redirect
       setIsLoading(false);

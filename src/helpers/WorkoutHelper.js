@@ -164,7 +164,7 @@ export default function useWorkoutState() {
                 // remove item if it already exists so we can set a new one
                 localStorage.removeItem(workoutKey);
             }
-            const workoutData = { 'exercises': advice, 'comment': advice.comment };
+            const workoutData = { 'exercises': advice.workout, 'comment': advice.comment };
             localStorage.setItem(workoutKey, JSON.stringify(workoutData));
         }
     };
