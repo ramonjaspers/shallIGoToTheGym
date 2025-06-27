@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from './Button';
+import Button from './Button.js';
 
 /**
  * renders a tile with an image or text

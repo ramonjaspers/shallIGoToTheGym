@@ -1,12 +1,12 @@
 // imports
 // modules/dependencies
 import React, { useEffect, useState, useContext } from 'react';
-import useQuestionState from '../helpers/QuestionState';
-import useWorkoutState from '../helpers/WorkoutHelper';
-import Exercise from '../components/Exercise';
-import { useHistory } from 'react-router';
-import Loader from 'react-loader-spinner';
-import { AuthContext } from '../context/AuthContext';
+import useQuestionState from '../helpers/QuestionState.js';
+import useWorkoutState from '../helpers/WorkoutHelper.js';
+import Exercise from '../components/Exercise.js';
+import { useNavigate } from 'react-router-dom';
+import { TailSpin } from 'react-loader-spinner';
+import { AuthContext } from '../context/AuthContext.js';
 // style import
 import '../assets/styles/Quiz.css'
 
@@ -23,7 +23,7 @@ export default function Quiz() {
   const [workout, setWorkout] = useState({ exercises: null, comment: null });
   const [isProcessing, setIsProcessing] = useState(false);
   const [userNotice, setUserNotice] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   /**
    * On mount get the current question if there is none
@@ -68,12 +68,12 @@ export default function Quiz() {
   return (
     <div className='content'>
       <div className='container'>
-        <div className='back-button' onClick={() => history.push('/')}>&#8592;</div>
+        <div className='back-button' onClick={() => navigate('/')}>&#8592;</div>
         <div className='container-content'>
           {isProcessing ?
             <>
               <h6> Loading exercises... </h6>
-              <Loader type="TailSpin" color="#00BFFF" height={'10vw'} width={'10vw'} />
+              <TailSpin color="#00BFFF" height={'10vw'} width={'10vw'} />
             </>
             : <>
               {!userNotice ?
@@ -97,16 +97,16 @@ export default function Quiz() {
                         <>
                           {/* User is not set, show login option */}
                           <p>You are currently not logged in, this means your workout will not be saved to your profile. Login anyways and store your workout to your profile?</p>
-                          {/* Pushing to the histrory with LocationDescriptorObject for state binding */}
-                          <button className='default-button' onClick={() => { history.push({ pathname: '/login', state: { exercises: workout.exercises } }) }}>Login</button>
+                          {/* Pushing to the history with LocationDescriptorObject for state binding */}
+                          <button className='default-button' onClick={() => { navigate('/login', { state: { exercises: workout.exercises } }) }}>Login</button>
                         </>
                       }
                       <p><b>Not happy with the result?</b></p>
                       {/** 
-                        *history.go() forces a redirect to the last set history value. 
-                        *On redirect we also lose the states which we want to start over.
-                        **/}
-                      <button className='default-button' onClick={() => history.go()}>Try again</button>
+                         *navigate(-1) forces a redirect to the last set history value. 
+                         *On redirect we also lose the states which we want to start over.
+                         **/}
+                      <button className='default-button' onClick={() => navigate(-1)}>Try again</button>
                       {workout.exercises && workout.exercises.length > 0 &&
                         <>
                           <h5>Give the following exercises a try</h5>

@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
-import { Link, useHistory } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-import useWorkoutState from '../helpers/WorkoutHelper';
-import Loader from 'react-loader-spinner';
+import { jwtDecode } from 'jwt-decode';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext.js';
+import useWorkoutState from '../helpers/WorkoutHelper.js';
+import { TailSpin } from 'react-loader-spinner';
 
 export default function Login() {
   // Init hooks
@@ -13,7 +13,8 @@ export default function Login() {
   const { storeWorkout } = useWorkoutState();
   const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm();
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
 
   /**
@@ -33,14 +34,14 @@ export default function Login() {
       const userData = jwtDecode(data.accessToken);
       // set IsAuth login state
       login(userData);
-      if (history.location.state && history.location.state.exercises ) {
+      if (location.state && location.state.exercises ) {
         // if exercises are set in the current location state we want to store these for the logged in user.
         // set exercises in workout object
-        storeWorkout({workout: history.location.state.exercises}, data.id);
+        storeWorkout({workout: location.state.exercises}, data.id);
       }
       //remove loader and redirect
       setIsLoading(false);
-      history.push('/profile');
+      navigate('/profile');
     }).catch((e) => {
       setIsLoading(false);
       // Set user error
@@ -54,11 +55,11 @@ export default function Login() {
   return (
     <div className='content'>
       <div className='container'>
-        <div className='back-button' onClick={() => history.push('/')}>&#8592;</div>
+        <div className='back-button' onClick={() => navigate('/')}>&#8592;</div>
         <div className="container-title"><h4>Login</h4></div>
         {!isAuth ?
           <form onSubmit={handleSubmit(signIn)}>
-          {history.location.state && history.location.state.signUp && <p className='success-message'>{history.location.state.signUp}</p>}
+          {location.state && location.state.signUp && <p className='success-message'>{location.state.signUp}</p>}
             <input type="text" placeholder="username" {...register("username", {
               required: 'Username is required.',
               maxLength: { value: 80, message: 'Invalid username given.' }
@@ -71,7 +72,7 @@ export default function Login() {
             {errors.password && <p className='error-message'>{errors.password.message}</p>}
             {!isLoading
               ? <input className="default-button" type="submit" onClick={() => clearErrors('api')} />
-              : <Loader type="TailSpin" color="#00BFFF" height={150} width={150} />
+              : <TailSpin color="#00BFFF" height={150} width={150} />
             }
             <br />
             {errors.api && <p className='error-message'>{errors.api.message}</p>}

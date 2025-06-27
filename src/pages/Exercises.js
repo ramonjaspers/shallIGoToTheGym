@@ -1,15 +1,15 @@
 // Import react module and components
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import Exercise from '../components/Exercise';
-import useWorkoutState from '../helpers/WorkoutHelper';
-import Loader from 'react-loader-spinner';
+import { useNavigate } from 'react-router-dom';
+import Exercise from '../components/Exercise.js';
+import useWorkoutState from '../helpers/WorkoutHelper.js';
+import { TailSpin } from 'react-loader-spinner';
 // import BG image
 import exercisesBG from '../assets/images/exercises.jpeg';
 
 export default function Exercises() {
     const { fetchExerciseMuscles, fetchExercises } = useWorkoutState();
-    const history = useHistory();
+    const navigate = useNavigate();
     const [muscles, setMuscles] = useState([]);
     const [error, setError] = useState('');
     const [exercises, setExercises] = useState({ exercises: [], processing: false });
@@ -50,7 +50,7 @@ export default function Exercises() {
         // Overwrite the default background
         <div className='content' style={{ backgroundImage: `url(${exercisesBG})` }}>
             <div className='container'>
-                <div className='back-button' onClick={() => history.push('/')}>&#8592; </div>
+                <div className='back-button' onClick={() => navigate('/')}>&#8592; </div>
                 <div className='container-content'>
                     <h4 className='container-title'>Find exercises</h4>
                     <div id='exerciseSelector'>
@@ -63,7 +63,7 @@ export default function Exercises() {
                         {error && <p className='error-message'>{error}</p>}
                     </div>
                     {exercises.processing
-                        ? <Loader type="TailSpin" color="#00BFFF" height={'10vw'} width={'10vw'} />
+                        ? <TailSpin color="#00BFFF" height={'10vw'} width={'10vw'} />
                         : <>
                             {exercises.exercises.length > 1 &&
                                 <>

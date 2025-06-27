@@ -1,8 +1,8 @@
 // Import react module and components
 import React, { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-import Loader from 'react-loader-spinner';
+import { useNavigate } from 'react-router-dom';
+import { TailSpin } from 'react-loader-spinner';
 // import helpers
 import tokenState from '../helpers/tokenState.js';
 
@@ -20,7 +20,7 @@ export const AuthContext = createContext({});
 export default function AuthContextProvider({ children }) {
     // Set default states
     const [isAuth, toggleIsAuth] = useState({ isAuth: false, user: null, status: 'pending' });
-    const history = useHistory();
+    const navigate = useNavigate();
 
     /**
      * 
@@ -64,7 +64,7 @@ export default function AuthContextProvider({ children }) {
         localStorage.removeItem('token')
         toggleIsAuth({ isAuth: false, user: null, status: 'done' });
         // Go to homepage
-        history.push('/');
+        navigate('/');
     };
 
     /**
@@ -122,7 +122,7 @@ export default function AuthContextProvider({ children }) {
                 ? children
                 : <div style={{ textAlign: 'center' }}>
                     <h1>Loading... please wait.</h1>
-                    <Loader type='TailSpin' color='#00BFFF' height={400} width={400} />
+                    <TailSpin color='#00BFFF' height={400} width={400} />
                 </div>
             }
         </AuthContext.Provider>

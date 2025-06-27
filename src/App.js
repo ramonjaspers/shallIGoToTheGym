@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { AuthContext } from './context/AuthContext';
-import Navigation from './components/Navigation';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Goals from './pages/Goals';
-import Login from './pages/Login';
-import Logout from './pages/Logout';
-import SignUp from './pages/SignUp';
-import Profile from './pages/Profile';
-import TDEE from './pages/TDEE';
-import Quiz from './pages/Quiz';
-import Exercises from './pages/Exercises';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { AuthContext } from './context/AuthContext.js';
+import Navigation from './components/Navigation.js';
+import Footer from './components/Footer.js';
+import Home from './pages/Home.js';
+import Goals from './pages/Goals.js';
+import Login from './pages/Login.js';
+import Logout from './pages/Logout.js';
+import SignUp from './pages/SignUp.js';
+import Profile from './pages/Profile.js';
+import TDEE from './pages/TDEE.js';
+import Quiz from './pages/Quiz.js';
+import Exercises from './pages/Exercises.js';
 import './assets/styles/App.css';
 
 export default function App() {
@@ -25,53 +25,35 @@ export default function App() {
      * @param {object} rest provides the data
      * @returns 
      */
-    const PrivateRoute = ({ children, authState, ...rest }) => {
-        return (
-            <Route {...rest}>
-                {authState ? children : <Redirect to="/" />}
-            </Route>
-        );
+    const PrivateRoute = ({ children, authState }) => {
+        return authState ? children : <Navigate to="/" replace />;
     };
 
     return (
         <div className='box'>
             <Navigation />
             <>
-                <Switch>
-                    <Route exact path="/">
-                        <Home />
-                    </Route>
-                    <Route path="/goals/:goal">
-                        <Goals />
-                    </Route>
-                    <Route path="/goals/">
-                        <Goals />
-                    </Route>
-                    <Route exact path="/home" >
-                        <Home />
-                    </Route>
-                    <Route exact path="/tdee" >
-                        <TDEE />
-                    </Route>
-                    <Route exact path="/quiz" >
-                        <Quiz />
-                    </Route>
-                    <Route exact path="/exercises" >
-                        <Exercises />
-                    </Route>
-                    <Route exact path="/login" >
-                        <Login />
-                    </Route>
-                    <Route exact path="/signup">
-                        <SignUp />
-                    </Route>
-                    <PrivateRoute exact path="/profile" authState={isAuth}>
-                        <Profile />
-                    </PrivateRoute>
-                    <PrivateRoute exact path="/logout" authState={isAuth}>
-                        <Logout />
-                    </PrivateRoute>
-                </Switch>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/goals/:goal" element={<Goals />} />
+                    <Route path="/goals/" element={<Goals />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/tdee" element={<TDEE />} />
+                    <Route path="/quiz" element={<Quiz />} />
+                    <Route path="/exercises" element={<Exercises />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/profile" element={
+                        <PrivateRoute authState={isAuth}>
+                            <Profile />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/logout" element={
+                        <PrivateRoute authState={isAuth}>
+                            <Logout />
+                        </PrivateRoute>
+                    } />
+                </Routes>
             </>
             <Footer />
         </div>

@@ -1,12 +1,12 @@
 // Import react module and components
 import React from 'react';
 // import components
-import Tile from '../components/Tile';
+import Tile from '../components/Tile.js';
 import { Link } from 'react-router-dom';
-import Button from '../components/Button';
+import Button from '../components/Button.js';
 
 // Import assets
-import '../assets/styles/Home.css';
+import '../assets/styles/home.css';
 import defaultBG from '../assets/images/defaultBG.jpeg';
 import goals from '../assets/images/goals.jpeg';
 import calories from '../assets/images/calories.jpeg';

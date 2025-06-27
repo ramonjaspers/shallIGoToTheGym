@@ -1,8 +1,8 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Advice({ goal }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   /**
    * Checks if the given goal is valid
@@ -35,7 +35,7 @@ export default function Advice({ goal }) {
   return (
     <div className={isValidGoal(goal) ? goal : 'maintenance'}>
       <div className='container'>
-        <div className='back-button' onClick={() => history.push('/goals')}>&#8592; </div>
+        <div className='back-button' onClick={() => navigate('/goals')}>&#8592; </div>
         <h4 className='container-title'>{goal}</h4>
         <p className='container-content'>{getAdviceText(goal)}</p>
       </div>

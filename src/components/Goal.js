@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 export default function Goal({ goal }) {
     return (
         <div className='column-wrapper'>
-            <Link to={`goals/${goal}`} className={`column ${goal}`}>
+            <Link to={`/goals/${goal}`} className={`column ${goal}`}>
                 <h2 className='centerText'>{goal}</h2>
             </Link>
         </div>

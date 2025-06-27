@@ -1,7 +1,7 @@
 // Imports
 // React module and components
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 // styles
 import '../assets/styles/Tdee.css';
@@ -12,7 +12,7 @@ import weightlossBG from '../assets/images/weightlossBG.jpeg';
  * @returns {HMTL} html node
  */
 export default function TDEE() {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [TDEE, setTdee] = useState(0);
     const [BMR, setBmr] = useState(0);
@@ -34,10 +34,10 @@ export default function TDEE() {
      */
     const navigateBack = () => {
         if (TDEE === 0) {
-            history.push('/');
+            navigate('/');
         } else {
             setTdee(0);
-            history.push('TDEE');
+            navigate('/TDEE');
         }
     };
 
@@ -54,7 +54,7 @@ export default function TDEE() {
                         </div>
                         <div className='container-content'>
                             <p>The Key to Weight Control: A simple equation of calories in minus calories out. This
-                                means to simply subtract the calories you’ve expended throughout the day from the ones
+                                means to simply subtract the calories you've expended throughout the day from the ones
                                 you took in. But there is a little more to it than just that. The biggest piece of the puzzle is
                                 to understand what makes up your Total Energy Expenditure (see below).
                             </p>

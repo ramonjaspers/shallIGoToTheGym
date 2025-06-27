@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import Exercise from '../components/Exercise';
-import Loader from 'react-loader-spinner';
+import { AuthContext } from '../context/AuthContext.js';
+import Exercise from '../components/Exercise.js';
+import { TailSpin } from 'react-loader-spinner';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 // import css
@@ -157,7 +157,7 @@ export default function Profile() {
             </div>
           </div>
         </>
-        : <Loader type="TailSpin" color="#00BFFF" height={150} width={150} />
+        : <TailSpin color="#00BFFF" height={150} width={150} />
       }
     </div>
   );

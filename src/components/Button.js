@@ -1,15 +1,15 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import '../assets/styles/Button.css'
 export default function Button({ link, text, isDisabled }) {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     /**
      * navigates to the given link
      * @returns {void}
      */
-    const navigateTo = () => history.push(`/${link}`);
+    const navigateTo = () => navigate(`/${link}`);
 
     return (
         <button

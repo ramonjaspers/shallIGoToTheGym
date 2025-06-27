@@ -1,6 +1,6 @@
-import Loader from 'react-loader-spinner';
+import { TailSpin } from 'react-loader-spinner';
 import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../context/AuthContext.js';
 
 /**
  * Just a general logout page where people can navigte to where logout gets called
@@ -18,7 +18,7 @@ export default function Logout() {
     <div className='content'>
       <div className='container'>
         <h6> Logging you out... </h6>
-        <Loader type="TailSpin" color="#00BFFF" height={'10vw'} width={'10vw'} />
+        <TailSpin color="#00BFFF" height={'10vw'} width={'10vw'} />
       </div>
     </div>
   );
